@@ -49,12 +49,21 @@ Pour mettre à jour un CV : remplacer le PDF dans `assets/cv/` en gardant le mê
 - [ ] **Relire les textes rédigés à partir du CV** (rubriques « Et après ? », savoir-être, centres d'intérêt),
       et remplacer l'extrait de code C par le tien si tu le souhaites.
 
-## Mise en ligne (GitHub Pages)
+## En ligne (GitHub Pages)
 
-1. Créer un dépôt GitHub (par exemple `eportfolio`).
-2. Y envoyer le contenu du dossier, **sans** le PDF de cours `FISE_Marketing_…pdf` ni le dossier `.claude/`.
-3. Dans le dépôt : *Settings → Pages → Deploy from a branch → main / (root)*.
-4. Le site est en ligne à `https://<ton-pseudo>.github.io/eportfolio/` : c'est ce lien à déposer sur Moodle.
+- Site : **https://maeldb.github.io/eportfolio/** (le lien à déposer sur Moodle)
+- Dépôt : https://github.com/maeldb/eportfolio (déploiement depuis la branche `main`, dossier racine)
+
+Pour publier une modification, depuis ce dossier :
+
+```bash
+git add -A
+git commit -m "Décris ta modification"
+git push
+```
+
+Le site se met à jour une à deux minutes après l'envoi. Le `.gitignore` empêche de publier
+le PDF du cours (`FISE_…pdf`) et le dossier `.claude/`.
 
 ## Notes
 
