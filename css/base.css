@@ -20,6 +20,20 @@
   --deep: #182659;
   --amethyst: #7f71e6;
 
+  /* Couleurs fixes ou propres au thème */
+  --accent: #533afd;
+  --accent-hover: #182659;
+  --on-accent: #ffffff;
+  --glass: rgba(255, 255, 255, .72);
+  --glass-strong: rgba(255, 255, 255, .86);
+  --code-bg: #061b31;
+  --code-border: #182659;
+  --dot: rgba(131, 155, 200, .34);
+  --dot-hot: 83, 58, 253;
+  --danger: #d93f45;
+  --danger-wash: rgba(217, 63, 69, .1);
+  color-scheme: light;
+
   /* Typographie */
   --font: "Inter Tight", "sohne-var", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
@@ -34,6 +48,37 @@
   /* Mouvement */
   --ease-out: cubic-bezier(.16, 1, .3, 1);
   --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+}
+
+/* Mode sombre : même système, posé sur le bleu nuit de la palette */
+:root[data-theme="dark"] {
+  --indigo: #8f80ff;
+  --indigo-hover: #a99fff;
+  --ink: #eef2fb;
+  --slate: #93a4bf;
+  --steel: #b2bfd3;
+  --smoke: #7d90b3;
+  --white: #061b31;
+  --mist: #0a2240;
+  --frost: #1c3554;
+  --lavender: #4d4ab0;
+  --lilac: #2e3a6e;
+  --wash: #1b1f52;
+  --amethyst: #a297ff;
+  --accent-hover: #3b28d1;
+  --glass: rgba(6, 27, 49, .7);
+  --glass-strong: rgba(6, 27, 49, .88);
+  --code-bg: #020f1f;
+  --code-border: #1c3554;
+  --dot: rgba(131, 155, 200, .2);
+  --dot-hot: 143, 128, 255;
+  --danger: #ff7b7b;
+  --danger-wash: rgba(255, 123, 123, .12);
+  color-scheme: dark;
+}
+/* Repli pour les navigateurs sans View Transitions : fondu des couleurs */
+.theme-fade, .theme-fade *, .theme-fade *::before, .theme-fade *::after {
+  transition: background-color .45s, color .45s, border-color .45s, fill .45s, stroke .45s !important;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -79,7 +124,7 @@ sup { font-size: .6em; line-height: 0; }
 
 .skip {
   position: fixed; left: 16px; top: -60px; z-index: 300;
-  background: var(--indigo); color: var(--white); padding: 10px 16px; border-radius: var(--radius);
+  background: var(--accent); color: var(--on-accent); padding: 10px 16px; border-radius: var(--radius);
   font-size: 14px; font-weight: 400; transition: top .2s;
 }
 .skip:focus { top: 16px; }
@@ -138,8 +183,8 @@ sup { font-size: .6em; line-height: 0; }
 .btn:hover::before { transform: scaleX(1); transform-origin: left center; }
 .btn--sm { height: 36px; padding: 0 16px; font-size: 14px; }
 
-.btn--primary { background: var(--indigo); color: var(--white); }
-.btn--primary::before { background: var(--deep); }
+.btn--primary { background: var(--accent); color: var(--on-accent); }
+.btn--primary::before { background: var(--accent-hover); }
 
 .btn--ghost { color: var(--indigo); border-color: var(--lavender); background: transparent; }
 .btn--ghost::before { background: var(--wash); }
@@ -196,12 +241,12 @@ sup { font-size: .6em; line-height: 0; }
 /* ---------- Navigation ---------- */
 .nav {
   position: fixed; inset: 0 0 auto; z-index: 100; height: var(--nav-h);
-  background: rgba(255, 255, 255, .72);
+  background: var(--glass);
   -webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%);
   border-bottom: 1px solid transparent;
   transition: border-color .3s, background-color .3s, transform .5s var(--ease-out);
 }
-.nav.is-scrolled { border-bottom-color: var(--frost); background: rgba(255, 255, 255, .86); }
+.nav.is-scrolled { border-bottom-color: var(--frost); background: var(--glass-strong); }
 .nav.is-hidden { transform: translateY(-100%); }
 .nav:focus-within { transform: none; }
 .menu-open body { overflow: hidden; }
@@ -229,6 +274,24 @@ sup { font-size: .6em; line-height: 0; }
 }
 
 .nav__actions { display: flex; align-items: center; gap: 8px; }
+
+/* Bouton clair / sombre : le soleil devient une lune */
+.theme {
+  display: grid; place-items: center; width: 36px; height: 36px; color: var(--ink);
+  border: 1px solid var(--frost); border-radius: var(--radius); transition: border-color .3s, background-color .3s;
+}
+.theme:hover { border-color: var(--lavender); background: var(--mist); }
+.theme__icon { width: 18px; height: 18px; overflow: visible; }
+.theme__core { fill: currentColor; transition: r .6s var(--ease-out); }
+.theme__cut { transition: cx .6s var(--ease-out), cy .6s var(--ease-out); }
+.theme__rays {
+  fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round;
+  transform-origin: 12px 12px; transition: transform .6s var(--ease-out), opacity .4s;
+}
+.theme:hover .theme__rays { transform: rotate(30deg); }
+:root[data-theme="dark"] .theme__core { r: 8px; }
+:root[data-theme="dark"] .theme__cut { cx: 17px; cy: 7px; }
+:root[data-theme="dark"] .theme__rays { transform: rotate(90deg) scale(0); opacity: 0; }
 
 .lang {
   position: relative; display: inline-flex; height: 36px; padding: 3px;
@@ -329,7 +392,7 @@ html[lang="en"] .lang__pill { transform: translateX(34px); }
 
 .totop {
   position: fixed; right: 24px; bottom: 24px; z-index: 90; width: 48px; height: 48px;
-  display: grid; place-items: center; background: rgba(255, 255, 255, .8);
+  display: grid; place-items: center; background: var(--glass-strong);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   border-radius: var(--radius); opacity: 0; transform: translateY(16px); pointer-events: none;
   transition: opacity .4s, transform .5s var(--ease-out);

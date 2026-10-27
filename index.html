@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maël Daoud-Beurteaux — ePortfolio</title>
   <meta name="description" content="ePortfolio de Maël Daoud-Beurteaux, élève ingénieur en Sciences du Numérique à l'ENSEEIHT (Toulouse INP). Parcours, projets, mobilité internationale et projet professionnel.">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Maël Daoud-Beurteaux — ePortfolio">
-  <meta property="og:description" content="Élève ingénieur ENSEEIHT · Sciences du Numérique · HPC & Big Data">
+  <meta property="og:description" content="Élève ingénieur en Sciences du Numérique · ENSEEIHT, Toulouse INP">
   <meta property="og:image" content="assets/img/photo.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23533afd'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,13 @@
   <link rel="stylesheet" href="css/sections.css">
   <link rel="stylesheet" href="css/motion.css">
   <script>
+    // Thème mémorisé, sinon celui de l'appareil — appliqué avant l'affichage pour éviter un flash.
+    (function () {
+      var theme = null;
+      try { theme = localStorage.getItem('theme'); } catch (e) { /* stockage indisponible */ }
+      if (theme !== 'light' && theme !== 'dark') theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
     // Masque les éléments animés seulement si le JS tourne ; filet de sécurité à 3 s.
     document.documentElement.classList.replace('no-js', 'js');
     setTimeout(function () {
@@ -34,7 +41,7 @@
     "affiliation": { "@type": "CollegeOrUniversity", "name": "ENSEEIHT — Toulouse INP" },
     "address": { "@type": "PostalAddress", "addressLocality": "Toulouse", "addressCountry": "FR" },
     "knowsLanguage": ["fr", "en", "es"],
-    "sameAs": ["https://www.linkedin.com/in/ma%C3%ABl-daoud-beurteaux-770342427/"]
+    "sameAs": ["https://www.linkedin.com/in/mael-db/"]
   }
   </script>
 </head>
@@ -66,6 +73,13 @@
         <span class="nav__indicator" aria-hidden="true"></span>
       </nav>
       <div class="nav__actions">
+        <button class="theme" type="button" data-theme-toggle aria-label="Passer en mode sombre">
+          <svg class="theme__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <mask id="theme-mask"><rect width="24" height="24" fill="#fff"/><circle class="theme__cut" cx="24" cy="2" r="7" fill="#000"/></mask>
+            <circle class="theme__core" cx="12" cy="12" r="5" mask="url(#theme-mask)"/>
+            <path class="theme__rays" d="M12 1.5v2.5M12 20v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M1.5 12H4M20 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+          </svg>
+        </button>
         <button class="lang" type="button" data-lang-toggle aria-label="Switch to English">
           <span class="lang__opt" data-l="fr">FR</span><span class="lang__opt" data-l="en">EN</span><span class="lang__pill" aria-hidden="true"></span>
         </button>
@@ -93,40 +107,28 @@
       <canvas class="hero__canvas" aria-hidden="true"></canvas>
       <div class="hero__grid container">
         <div class="hero__copy">
-          <p class="tag tag--live" data-reveal="up"><span class="tag__dot"></span><span data-i18n="hero.pill">Élève ingénieur · ENSEEIHT · Sciences du Numérique</span></p>
-          <h1 class="hero__title" data-split>
-            <span data-i18n="hero.t1">Je rends les systèmes plus</span>
-            <span class="rotator" data-nosplit data-words="rapides.|efficaces.|sobres.|fiables." data-i18n-words="hero.words"><span class="rotator__word">rapides.</span></span>
+          <p class="tag tag--live" data-reveal="up"><span class="tag__dot"></span><span data-i18n="hero.pill">Élève ingénieur en Sciences du Numérique · ENSEEIHT</span></p>
+          <h1 class="hero__title">
+            <span class="visually-hidden">Maël Daoud-Beurteaux</span>
+            <span class="hero__name" aria-hidden="true" data-split="chars"><span class="hero__first">Maël</span> <span class="hero__last">Daoud-Beurteaux</span></span>
           </h1>
-          <p class="hero__lead" data-reveal="up" data-i18n-html="hero.lead">Je m'appelle <strong>Maël Daoud-Beurteaux</strong>. En 1<sup>re</sup> année à l'ENSEEIHT (Toulouse INP), je vise le calcul haute performance et le Big Data : faire tourner plus vite, avec moins d'énergie, les programmes dont la science et l'industrie ont besoin.</p>
+          <p class="hero__lead" data-reveal="up" data-i18n-html="hero.lead">J'aime la programmation, sous toutes ses formes, et je m'oriente vers le calcul haute performance et le Big Data.</p>
           <div class="hero__ctas" data-reveal="up">
             <a class="btn btn--primary" href="#projects" data-magnetic><span data-i18n="hero.cta1">Voir mes projets</span><svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-            <a class="btn btn--ghost" href="CV.pdf" target="_blank" rel="noopener" data-magnetic data-i18n-href="hero.cvHref"><svg class="btn__icon btn__icon--lead" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10"/></svg><span data-i18n="hero.cta2">Télécharger mon CV</span></a>
+            <a class="btn btn--ghost" href="assets/cv/Mael-Daoud-Beurteaux-CV-FR.pdf" target="_blank" rel="noopener" data-magnetic data-i18n-href="hero.cvHref"><svg class="btn__icon btn__icon--lead" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10"/></svg><span data-i18n="hero.cta2">Télécharger mon CV</span></a>
           </div>
           <a class="link-arrow hero__pitch" href="#pitch" data-reveal="up"><span data-i18n="hero.pitch">Regarder mon pitch vidéo (EN)</span> <span class="link-arrow__chev" aria-hidden="true">›</span></a>
         </div>
 
         <figure class="hero__media" data-reveal="clip">
           <div class="photo" data-tilt data-cursor-label="Hello">
-            <img src="assets/img/photo.jpg" width="352" height="468" alt="Portrait de Maël Daoud-Beurteaux" data-i18n-alt="hero.alt">
+            <img src="assets/img/photo.jpg" width="880" height="1168" alt="Portrait de Maël Daoud-Beurteaux" data-i18n-alt="hero.alt">
             <span class="photo__tick photo__tick--tl"></span><span class="photo__tick photo__tick--tr"></span>
             <span class="photo__tick photo__tick--bl"></span><span class="photo__tick photo__tick--br"></span>
             <span class="photo__scan" aria-hidden="true"></span>
           </div>
-          <span class="chip-float chip-float--a" data-depth="18"><b>TIPE</b> 66 → 77 %</span>
-          <span class="chip-float chip-float--b" data-depth="-14"><b>Suguru</b> 8×8 &lt; 1 s</span>
-          <span class="chip-float chip-float--c" data-depth="10"><b>HPC</b> &amp; Big Data</span>
-          <figcaption class="hero__caption" data-i18n="hero.caption">Toulouse, France · disponible pour un stage (S6, été 2027)</figcaption>
+          <figcaption class="hero__caption" data-i18n="hero.caption">Toulouse · à la recherche d'un stage ouvrier, juin – août 2027</figcaption>
         </figure>
-      </div>
-
-      <div class="container">
-        <dl class="stats" data-reveal="up" data-stagger>
-          <div class="stat"><dt class="stat__num"><span data-count="77">0</span><small> %</small></dt><dd class="stat__label" data-i18n="stat.1">de rendement atteint au TIPE, contre 66 % au départ</dd></div>
-          <div class="stat"><dt class="stat__num"><span data-count="338" data-from="2000">2000</span><small data-i18n="stat.2.suf">e</small></dt><dd class="stat__label" data-i18n="stat.2">rang au concours CCINP, après une prépa MP2I–MPI</dd></div>
-          <div class="stat"><dt class="stat__num"><span data-count="15.81" data-decimals="2">0</span><small>/20</small></dt><dd class="stat__label" data-i18n="stat.3">de moyenne au baccalauréat, mention Bien</dd></div>
-          <div class="stat"><dt class="stat__num"><span data-count="3">0</span></dt><dd class="stat__label" data-i18n="stat.4">langues : français natif, anglais C1, espagnol B1</dd></div>
-        </dl>
       </div>
 
       <a class="scroll-cue" href="#about" aria-label="Défiler" data-i18n-aria="hero.scroll"><span class="scroll-cue__line"></span><span data-i18n="hero.scrollTxt">Défiler</span></a>
@@ -134,29 +136,35 @@
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track" data-marquee>
-        <span>C</span><i>/</i><span>OCaml</span><i>/</i><span>Ada</span><i>/</i><span>SQL</span><i>/</i><span>HTML · CSS · JS</span><i>/</i><span>Git</span><i>/</i><span>Linux</span><i>/</i><span>Algorithmique</span><i>/</i><span>Optimisation</span><i>/</i><span>HPC</span><i>/</i><span>Big Data</span><i>/</i>
+        <span>C</span><i>/</i><span>OCaml</span><i>/</i><span>Ada</span><i>/</i><span>SQL</span><i>/</i><span>Git</span><i>/</i><span>HTML · CSS · JS</span><i>/</i><span>Linux</span><i>/</i><span>Windows</span><i>/</i><span data-i18n="mq.algo">Algorithmique</span><i>/</i>
       </div>
     </div>
 
     <section class="section about container" id="about" aria-labelledby="about-title">
       <p class="eyebrow" data-reveal="up"><span class="eyebrow__num">01</span><span data-i18n="about.eyebrow">À propos</span></p>
       <h2 class="visually-hidden" id="about-title" data-i18n="about.title">Qui suis-je ?</h2>
-      <p class="statement" data-scrub data-i18n="about.statement">Après deux années de prépa MP2I–MPI, j'aime les problèmes qui résistent : comprendre où un système perd du temps ou de l'énergie, mesurer, puis optimiser. Mon cap : mettre cette rigueur au service du calcul haute performance et des données massives.</p>
+      <p class="statement" data-scrub data-i18n="about.statement">Après deux années de classes préparatoires MP2I – MPI, j'ai intégré l'ENSEEIHT, grande école d'ingénieurs publique de Toulouse INP, au sein du département Sciences du Numérique, qui forme à l'informatique et aux télécommunications.</p>
+      <h3 class="pillars__title" data-reveal="up" data-i18n="soft.title">Savoir-être</h3>
       <div class="pillars" data-reveal="up" data-stagger>
         <article class="pillar">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 10 12l4 4 6-8"/><path d="M15 8h5v5"/></svg>
-          <h3 data-i18n="pillar.1.t">Performance</h3>
-          <p data-i18n="pillar.1.p">Mesurer avant d'optimiser : +11 points de rendement au TIPE, une grille 8×8 résolue en moins d'une seconde.</p>
-        </article>
-        <article class="pillar">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7"/></svg>
-          <h3 data-i18n="pillar.2.t">Rigueur</h3>
-          <p data-i18n="pillar.2.p">Deux ans de classes préparatoires scientifiques : raisonner, démontrer, vérifier chaque étape.</p>
+          <h4 data-i18n="soft.1.t">Rigueur</h4>
+          <p data-i18n="soft.1.p">Deux années de prépa : raisonner, démontrer, vérifier chaque étape.</p>
         </article>
         <article class="pillar">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg>
-          <h3 data-i18n="pillar.3.t">Curiosité</h3>
-          <p data-i18n="pillar.3.p">Du C à OCaml en passant par Ada : chaque langage est une nouvelle façon de penser un problème.</p>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>
+          <h4 data-i18n="soft.2.t">Adaptabilité</h4>
+          <p data-i18n="soft.2.p">Passer d'un langage ou d'un environnement à l'autre sans perdre le fil.</p>
+        </article>
+        <article class="pillar">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>
+          <h4 data-i18n="soft.3.t">Créativité</h4>
+          <p data-i18n="soft.3.p">Chercher plusieurs approches avant de retenir la bonne.</p>
+        </article>
+        <article class="pillar">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.5a3 3 0 0 1 0 5M17.5 14.2A5.5 5.5 0 0 1 20.5 19"/></svg>
+          <h4 data-i18n="soft.4.t">Travail en équipe</h4>
+          <p data-i18n="soft.4.p">Avancer à plusieurs, sur un terrain comme sur un projet.</p>
         </article>
       </div>
     </section>
@@ -166,7 +174,7 @@
       <div class="container section__head">
         <p class="eyebrow" data-reveal="up"><span class="eyebrow__num">02</span><span data-i18n="tab.engineering">Parcours ingénieur</span></p>
         <h2 class="h2" id="eng-title" data-split data-i18n="eng.title">Une formation tournée vers le calcul et les données.</h2>
-        <p class="lead" data-reveal="up" data-i18n="eng.lead">Cycle ingénieur à l'ENSEEIHT, filière Sciences du Numérique, après deux années de classes préparatoires MP2I – MPI au lycée Carnot de Dijon.</p>
+        <p class="lead" data-reveal="up" data-i18n="eng.lead">De la prépa au cycle ingénieur : les grandes étapes de ma formation, et celles qui m'attendent.</p>
         <nav class="subnav" aria-label="Sous-onglets" data-reveal="up">
           <a class="subnav__link" href="#roadmap" data-i18n="eng.sub1">Feuille de route</a>
           <a class="subnav__link" href="#projects" data-i18n="eng.sub2">Projets &amp; productions</a>
@@ -186,43 +194,43 @@
                 <p class="tl-card__date">2024</p>
                 <h4 class="tl-card__title" data-i18n="road.1.t">Baccalauréat général — mention Bien</h4>
                 <p class="tl-card__place">Lycée Pré-Saint-Sauveur, Saint-Claude</p>
-                <p class="tl-card__text" data-i18n="road.1.p">Moyenne de 15,81/20.</p>
+                <p class="tl-card__text" data-i18n="road.1.p">Spécialités mathématiques et physique-chimie. Moyenne de 15,81/20.</p>
               </li>
               <li class="tl-card is-past">
                 <p class="tl-card__date">2024 – 2026</p>
                 <h4 class="tl-card__title" data-i18n="road.2.t">Classes préparatoires MP2I – MPI</h4>
                 <p class="tl-card__place">Lycée Carnot, Dijon</p>
-                <p class="tl-card__text" data-i18n="road.2.p">Rang CCINP : 338. TIPE sur le rendement énergétique et solveur de Suguru en C.</p>
+                <p class="tl-card__text" data-i18n="road.2.p">Rang CCINP : 338.</p>
               </li>
               <li class="tl-card is-now">
                 <p class="tl-card__date"><span data-i18n="road.3.d">Depuis sept. 2026</span> <span class="tag tag--sm" data-i18n="road.now">En cours</span></p>
                 <h4 class="tl-card__title" data-i18n="road.3.t">Cycle ingénieur — 1<sup>re</sup> année</h4>
                 <p class="tl-card__place">ENSEEIHT, Toulouse INP</p>
-                <p class="tl-card__text" data-i18n="road.3.p">Filière Sciences du Numérique.</p>
+                <p class="tl-card__text" data-i18n="road.3.p">Département Sciences du Numérique : informatique et télécommunications.</p>
               </li>
               <li class="tl-card is-next">
-                <p class="tl-card__date" data-i18n="road.4.d">Été 2027</p>
-                <h4 class="tl-card__title" data-i18n="road.4.t">Stage de 1<sup>re</sup> année (S6)</h4>
+                <p class="tl-card__date" data-i18n="road.4.d">Juin – août 2027</p>
+                <h4 class="tl-card__title" data-i18n="road.4.t">Stage ouvrier (S6)</h4>
                 <p class="tl-card__place" data-i18n="road.4.pl">Recherche en cours</p>
-                <p class="tl-card__text" data-i18n="road.4.p">Une première expérience en entreprise ou en laboratoire.</p>
+                <p class="tl-card__text" data-i18n="road.4.p">6 à 8 semaines en entreprise.</p>
               </li>
               <li class="tl-card is-next">
                 <p class="tl-card__date">2027 – 2028</p>
                 <h4 class="tl-card__title" data-i18n="road.5.t">2<sup>e</sup> année : parcours HPC &amp; Big Data</h4>
-                <p class="tl-card__place" data-i18n="road.5.pl">ENSEEIHT · parcours envisagé</p>
-                <p class="tl-card__text" data-i18n="road.5.p">Calcul parallèle, architectures, données massives, avec un stage au S8.</p>
+                <p class="tl-card__place" data-i18n="road.5.pl">ENSEEIHT · parcours visé</p>
+                <p class="tl-card__text" data-i18n="road.5.p">Autre option envisagée : Architecture Système et Réseaux. Stage au S8.</p>
               </li>
               <li class="tl-card is-next">
                 <p class="tl-card__date" data-i18n="road.6.d">Automne 2028</p>
                 <h4 class="tl-card__title" data-i18n="road.6.t">Mobilité internationale (S9)</h4>
                 <p class="tl-card__place" data-i18n="road.6.pl">17 semaines minimum</p>
-                <p class="tl-card__text"><a class="link-underline" href="#mobility-projects" data-i18n="road.6.p">Voir mes 3 projets de mobilité</a></p>
+                <p class="tl-card__text"><a class="link-underline" href="#mobility-projects" data-i18n="road.6.p">Voir mes projets de mobilité</a></p>
               </li>
               <li class="tl-card is-next">
                 <p class="tl-card__date">2029</p>
                 <h4 class="tl-card__title" data-i18n="road.7.t">Diplôme d'ingénieur</h4>
                 <p class="tl-card__place">ENSEEIHT, Toulouse INP</p>
-                <p class="tl-card__text" data-i18n="road.7.p">Objectif : rejoindre une équipe HPC ou data.</p>
+                <p class="tl-card__text" data-i18n="road.7.p">Diplôme d'ingénieur, grade de master.</p>
               </li>
             </ol>
           </div>
@@ -264,7 +272,7 @@
                 <p class="card__body" data-i18n="sg.p">Représentation, affichage et vérification de grilles, puis résolution par force brute, algorithme glouton et backtracking : une grille 8×8 résolue en moins d'une seconde.</p>
                 <ul class="tags"><li class="tag">C</li><li class="tag" data-i18n="sg.tag2">Algorithmique</li><li class="tag">Backtracking</li></ul>
                 <div class="seg" role="tablist" aria-label="Démo ou code" data-seg>
-                  <button class="seg__btn is-active" type="button" role="tab" aria-selected="true" aria-controls="sg-demo" data-i18n="sg.tab1">Démo interactive</button>
+                  <button class="seg__btn is-active" type="button" role="tab" aria-selected="true" aria-controls="sg-demo" data-i18n="sg.tab1">Jouer</button>
                   <button class="seg__btn" type="button" role="tab" aria-selected="false" aria-controls="sg-code" data-i18n="sg.tab2">Le principe en C</button>
                   <span class="seg__pill" aria-hidden="true"></span>
                 </div>
@@ -275,23 +283,28 @@
                     <div><dt>T</dt><dd><b data-i18n="star.t">Tâche</b><span data-i18n="sg.ta">Représenter, afficher et vérifier des grilles de Suguru, puis les résoudre automatiquement.</span></dd></div>
                     <div><dt>A</dt><dd><b data-i18n="star.a">Action</b><span data-i18n="sg.a">Implémentation en C et comparaison de trois approches : force brute, glouton et backtracking.</span></dd></div>
                     <div><dt>R</dt><dd><b data-i18n="star.r">Résultat</b><span data-i18n="sg.r">Une grille 8×8 résolue en moins d'une seconde.</span></dd></div>
-                    <div><dt>→</dt><dd><b data-i18n="star.n">Et après ?</b><span data-i18n="sg.n">Comparer plusieurs algorithmes sur un même problème m'a donné le goût de la performance, au cœur du HPC.</span></dd></div>
+                    <div><dt>→</dt><dd><b data-i18n="star.n">Et après ?</b><span data-i18n="sg.n">Comparer plusieurs algorithmes sur un même problème m'a appris à évaluer le coût de chaque approche.</span></dd></div>
                   </dl>
                 </div>
               </div>
 
               <div class="sg-panels">
                 <div class="sg" id="sg-demo" role="tabpanel" data-suguru>
-                  <div class="sg__grid" role="img" aria-label="Grille de Suguru 6×6 résolue pas à pas par backtracking" data-i18n-aria="sg.aria"></div>
+                  <p class="sg__hint" data-i18n="sg.hint">À toi de jouer : clique sur une case, puis tape un chiffre ou utilise le pavé.</p>
+                  <div class="sg__grid" role="group" aria-label="Grille de Suguru 6×6 à compléter" data-i18n-aria="sg.aria"></div>
+                  <div class="sg__pad" role="group" aria-label="Pavé numérique" data-i18n-aria="sg.padAria">
+                    <button type="button" data-sg-num="1">1</button><button type="button" data-sg-num="2">2</button><button type="button" data-sg-num="3">3</button><button type="button" data-sg-num="4">4</button><button type="button" data-sg-num="5">5</button><button type="button" data-sg-num="0" aria-label="Effacer la case" data-i18n-aria="sg.erase">⌫</button>
+                  </div>
                   <div class="sg__bar">
-                    <button class="btn btn--primary btn--sm" type="button" data-sg-play>Lancer la résolution</button>
-                    <button class="btn btn--tertiary btn--sm" type="button" data-sg-reset data-i18n="sg.reset">Réinitialiser</button>
+                    <button class="btn btn--primary btn--sm" type="button" data-sg-solve>Voir la résolution automatique</button>
+                    <button class="btn btn--tertiary btn--sm" type="button" data-sg-reset data-i18n="sg.reset">Recommencer</button>
                   </div>
                   <dl class="sg__stats">
-                    <div><dt data-i18n="sg.st1">Essais</dt><dd data-sg-tries>0</dd></div>
-                    <div><dt data-i18n="sg.st2">Retours arrière</dt><dd data-sg-backs>0</dd></div>
-                    <div><dt data-i18n="sg.st3">Cases remplies</dt><dd data-sg-filled>13/36</dd></div>
+                    <div><dt data-sg-l1>Cases remplies</dt><dd data-sg-v1>13/36</dd></div>
+                    <div><dt data-sg-l2>Temps</dt><dd data-sg-v2>00:00</dd></div>
+                    <div><dt data-sg-l3>Conflits</dt><dd data-sg-v3>0</dd></div>
                   </dl>
+                  <p class="sg__msg" role="status" aria-live="polite" data-sg-msg></p>
                   <p class="sg__rules" data-i18n="sg.rules">Règle : une région de n cases contient les chiffres 1 à n, et deux cases voisines, même en diagonale, ne portent jamais le même chiffre.</p>
                 </div>
                 <div class="code" id="sg-code" role="tabpanel" hidden>
@@ -319,13 +332,13 @@
       <div class="container" id="skills">
         <h3 class="h3 block-title" data-reveal="up" data-i18n="skills.title">Compétences techniques</h3>
         <ul class="ledger" data-reveal="up" data-stagger>
-          <li class="ledger__row"><span class="ledger__name">C</span><span class="ledger__cat" data-i18n="skills.lang">Langage</span><span class="ledger__ctx" data-i18n="skills.c">Solveur de Suguru, programmation système</span></li>
-          <li class="ledger__row"><span class="ledger__name">OCaml</span><span class="ledger__cat" data-i18n="skills.lang">Langage</span><span class="ledger__ctx" data-i18n="skills.ocaml">Programmation fonctionnelle en prépa MP2I – MPI</span></li>
-          <li class="ledger__row"><span class="ledger__name">Ada</span><span class="ledger__cat" data-i18n="skills.lang">Langage</span><span class="ledger__ctx" data-i18n="skills.ada">Programmation impérative à l'ENSEEIHT</span></li>
-          <li class="ledger__row"><span class="ledger__name">SQL</span><span class="ledger__cat" data-i18n="skills.data">Données</span><span class="ledger__ctx" data-i18n="skills.sql">Bases de données relationnelles</span></li>
-          <li class="ledger__row"><span class="ledger__name">HTML / CSS / JS</span><span class="ledger__cat">Web</span><span class="ledger__ctx" data-i18n="skills.web">Pages web et interfaces</span></li>
-          <li class="ledger__row"><span class="ledger__name">Git</span><span class="ledger__cat" data-i18n="skills.tool">Outil</span><span class="ledger__ctx" data-i18n="skills.git">Versionnage et travail en équipe</span></li>
-          <li class="ledger__row"><span class="ledger__name">Linux</span><span class="ledger__cat" data-i18n="skills.sys">Système</span><span class="ledger__ctx" data-i18n="skills.linux">Environnement de travail au quotidien</span></li>
+          <li class="ledger__row"><span class="ledger__name">C</span><span class="ledger__cat" data-i18n="skills.lang">Langage</span><span class="ledger__ctx" data-i18n="skills.c">Programmation impérative, en prépa MP2I – MPI</span><span class="lvl" style="--lvl:4" role="img" aria-label="Niveau 4 sur 5" data-i18n-aria="lvl.4"><i></i><i></i><i></i><i></i><i></i></span></li>
+          <li class="ledger__row"><span class="ledger__name">OCaml</span><span class="ledger__cat" data-i18n="skills.lang">Langage</span><span class="ledger__ctx" data-i18n="skills.ocaml">Programmation fonctionnelle, en prépa MP2I – MPI</span><span class="lvl" style="--lvl:4" role="img" aria-label="Niveau 4 sur 5" data-i18n-aria="lvl.4"><i></i><i></i><i></i><i></i><i></i></span></li>
+          <li class="ledger__row"><span class="ledger__name">Ada</span><span class="ledger__cat" data-i18n="skills.lang">Langage</span><span class="ledger__ctx" data-i18n="skills.ada">Programmation impérative, à l'ENSEEIHT</span><span class="lvl" style="--lvl:3" role="img" aria-label="Niveau 3 sur 5" data-i18n-aria="lvl.3"><i></i><i></i><i></i><i></i><i></i></span></li>
+          <li class="ledger__row"><span class="ledger__name">SQL</span><span class="ledger__cat" data-i18n="skills.data">Données</span><span class="ledger__ctx" data-i18n="skills.sql">Bases de données relationnelles</span><span class="lvl" style="--lvl:3" role="img" aria-label="Niveau 3 sur 5" data-i18n-aria="lvl.3"><i></i><i></i><i></i><i></i><i></i></span></li>
+          <li class="ledger__row"><span class="ledger__name">Git</span><span class="ledger__cat" data-i18n="skills.tool">Outil</span><span class="ledger__ctx" data-i18n="skills.git">Versionnage et travail en équipe</span><span class="lvl" style="--lvl:3" role="img" aria-label="Niveau 3 sur 5" data-i18n-aria="lvl.3"><i></i><i></i><i></i><i></i><i></i></span></li>
+          <li class="ledger__row"><span class="ledger__name">HTML / CSS / JS</span><span class="ledger__cat">Web</span><span class="ledger__ctx" data-i18n="skills.web">Pages web et interfaces</span><span class="lvl" style="--lvl:2" role="img" aria-label="Niveau 2 sur 5" data-i18n-aria="lvl.2"><i></i><i></i><i></i><i></i><i></i></span></li>
+          <li class="ledger__row"><span class="ledger__name" data-i18n="skills.os">Systèmes</span><span class="ledger__cat" data-i18n="skills.sys">Système</span><span class="ledger__ctx">Linux, Windows</span><span class="lvl" aria-hidden="true"></span></li>
         </ul>
       </div>
     </section>
@@ -335,7 +348,7 @@
       <div class="container section__head">
         <p class="eyebrow" data-reveal="up"><span class="eyebrow__num">03</span><span data-i18n="tab.mobility">Mobilité internationale</span></p>
         <h2 class="h2" id="mob-title" data-split data-i18n="mob.title">S'ouvrir à l'international, en cohérence avec mon projet.</h2>
-        <p class="lead" data-reveal="up" data-i18n="mob.lead">Au moins 17 semaines de mobilité sont prévues au S9. Je les prépare dès maintenant, en lien avec mon orientation HPC &amp; Big Data et avec les profils qui m'inspirent.</p>
+        <p class="lead" data-reveal="up" data-i18n="mob.lead">Au moins 17 semaines de mobilité sont prévues au S9. Je les prépare dès maintenant, en lien avec mon parcours et avec les profils qui m'inspirent.</p>
         <nav class="subnav" aria-label="Sous-onglets" data-reveal="up">
           <a class="subnav__link" href="#languages" data-i18n="mob.sub1">Langues (dont LV2)</a>
           <a class="subnav__link" href="#mobility-projects" data-i18n="mob.sub2">Projets de mobilité</a>
@@ -356,30 +369,32 @@
       </div>
 
       <div class="container" id="mobility-projects">
-        <h3 class="h3 block-title" data-reveal="up" data-i18n="mp.title">3 projets de mobilité envisagés</h3>
-        <p class="muted block-sub" data-reveal="up" data-i18n="mp.sub">Chacun est aligné sur l'un de mes trois role models (voir Développement de carrière).</p>
-        <div class="grid-3" data-reveal="up" data-stagger>
+        <h3 class="h3 block-title" data-reveal="up" data-i18n="mp.title">Mes projets de mobilité</h3>
+        <div class="duo" data-reveal="up">
           <article class="card card--line" data-tilt>
             <span class="card__glow" aria-hidden="true"></span>
-            <p class="card__label"><span class="num">01</span> <span data-i18n="mp.1.l">Profil HPC</span> <span class="tag tag--todo" data-i18n="todo.tbd">À préciser</span></p>
-            <h4 class="card__title card__title--sm" data-i18n="mp.1.t">Stage dans un centre de supercalcul européen</h4>
-            <p class="card__body" data-i18n="mp.1.p">Participer à l'optimisation de codes scientifiques sur des machines parallèles de grande taille (réseau EuroHPC).</p>
-            <a class="link-arrow" href="#role-models"><span data-i18n="mp.link1">Lié au role model n° 1</span> <span class="link-arrow__chev" aria-hidden="true">›</span></a>
+            <p class="card__label"><span class="num">01</span> <span data-i18n="mp.1.l">Échange · Master of Science</span></p>
+            <h4 class="card__title" data-i18n="mp.1.t">Un MSc à l'EPFL, à Lausanne</h4>
+            <p class="card__place" data-i18n="mp.1.pl">École polytechnique fédérale de Lausanne · Suisse</p>
+            <p class="card__body" data-i18n="mp.1.p">Rejoindre l'EPFL dans le cadre d'un échange « free mover » avec l'ENSEEIHT, pour y obtenir un master (MSc) en Computer Science.</p>
+            <p class="duo__sub" data-i18n="mp.1.spec">Les spécialisations qui m'intéressent</p>
+            <ul class="specs">
+              <li><b>Computer Systems</b><span data-i18n="mp.1.s1">Systèmes d'exploitation, architecture des ordinateurs, systèmes distribués et en réseau, systèmes de gestion de données.</span></li>
+              <li><b>AI &amp; Data Science</b><span data-i18n="mp.1.s2">Apprentissage automatique et science des données, dont le traitement de données à grande échelle.</span></li>
+            </ul>
+            <p class="card__note" data-i18n="mp.1.n">Elles prolongent les parcours que j'envisage à l'ENSEEIHT : HPC et Big Data en priorité, ou Architecture Système et Réseaux.</p>
+            <a class="link-arrow" href="https://www.epfl.ch/schools/ic/education/master/computer-science/specializations-master-info/" target="_blank" rel="noopener"><span data-i18n="mp.1.link">Les spécialisations sur le site de l'EPFL</span> <span class="link-arrow__chev" aria-hidden="true">↗</span></a>
           </article>
-          <article class="card card--line" data-tilt>
-            <span class="card__glow" aria-hidden="true"></span>
-            <p class="card__label"><span class="num">02</span> <span data-i18n="mp.2.l">Profil data</span> <span class="tag tag--todo" data-i18n="todo.tbd">À préciser</span></p>
-            <h4 class="card__title card__title--sm" data-i18n="mp.2.t">Stage en data engineering à l'étranger</h4>
-            <p class="card__body" data-i18n="mp.2.p">Concevoir des chaînes de traitement capables d'absorber des volumes de données massifs, dans une équipe internationale.</p>
-            <a class="link-arrow" href="#role-models"><span data-i18n="mp.link2">Lié au role model n° 2</span> <span class="link-arrow__chev" aria-hidden="true">›</span></a>
-          </article>
-          <article class="card card--line" data-tilt>
-            <span class="card__glow" aria-hidden="true"></span>
-            <p class="card__label"><span class="num">03</span> <span data-i18n="mp.3.l">Profil recherche</span> <span class="tag tag--todo" data-i18n="todo.tbd">À préciser</span></p>
-            <h4 class="card__title card__title--sm" data-i18n="mp.3.t">Semestre d'échange en calcul scientifique</h4>
-            <p class="card__body" data-i18n="mp.3.p">Approfondir la simulation numérique et le calcul parallèle dans une université partenaire anglophone.</p>
-            <a class="link-arrow" href="#role-models"><span data-i18n="mp.link3">Lié au role model n° 3</span> <span class="link-arrow__chev" aria-hidden="true">›</span></a>
-          </article>
+          <div class="duo__side">
+            <article class="card card--line card--todo">
+              <p class="card__label"><span class="num">02</span> <span class="tag tag--todo" data-i18n="todo.soon">À venir</span></p>
+              <p class="card__body" data-i18n="mp.2.p">Deuxième projet de mobilité, à construire au fil de mes entretiens et de mes stages.</p>
+            </article>
+            <article class="card card--line card--todo">
+              <p class="card__label"><span class="num">03</span> <span class="tag tag--todo" data-i18n="todo.soon">À venir</span></p>
+              <p class="card__body" data-i18n="mp.3.p">Troisième projet de mobilité, à définir.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -388,31 +403,31 @@
     <section class="section" id="sustainability" data-section aria-labelledby="sus-title">
       <div class="container section__head">
         <p class="eyebrow" data-reveal="up"><span class="eyebrow__num">04</span><span data-i18n="tab.sustainability">Développement durable &amp; engagement</span></p>
-        <h2 class="h2" id="sus-title" data-split data-i18n="sus.title">Optimiser, c'est aussi consommer moins.</h2>
-        <p class="lead" data-reveal="up" data-i18n="sus.lead">Mon TIPE m'a appris qu'un gain de rendement est d'abord une économie d'énergie. Dans le numérique, l'enjeu est le même : les centres de calcul consomment énormément d'électricité, et chaque optimisation compte.</p>
+        <h2 class="h2" id="sus-title" data-split data-i18n="sus.title">Comprendre les enjeux de notre époque.</h2>
+        <p class="lead" data-reveal="up" data-i18n="sus.lead">Dès ma première année, l'ENSEEIHT m'a permis de participer à plusieurs actions de sensibilisation, sur le climat comme sur les violences sexistes et sexuelles.</p>
       </div>
       <div class="container sus">
-        <div class="sus__stat" data-reveal="up">
-          <p class="mega"><span data-count="32" data-prefix="−">0</span><small>%</small></p>
-          <p class="muted" data-i18n="sus.stat">de pertes d'énergie sur mon TIPE : elles passent de 34 % à 23 % de l'énergie stockée.</p>
-        </div>
         <div class="grid-3 sus__cards" data-reveal="up" data-stagger>
           <article class="card card--tint">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7z"/></svg>
-            <h4 class="card__title card__title--sm" data-i18n="sus.1.t">Sobriété numérique</h4>
-            <p class="card__body" data-i18n="sus.1.p">Un code efficace, c'est moins de calcul inutile, donc moins d'énergie consommée. C'est l'un des fils conducteurs de mon orientation vers le HPC.</p>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            <p class="card__label" data-i18n-html="sus.1.l">Atelier · 1<sup>re</sup> année</p>
+            <h4 class="card__title card__title--sm" data-i18n="sus.1.t">La Fresque du Climat</h4>
+            <p class="card__body" data-i18n="sus.1.p">Un atelier collaboratif avec d'autres élèves de l'ENSEEIHT, pour comprendre les mécanismes du changement climatique et prendre la mesure des défis auxquels nous ferons face en tant qu'ingénieurs.</p>
           </article>
           <article class="card card--tint">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
-            <h4 class="card__title card__title--sm" data-i18n="sus.2.t">Mesurer pour décider</h4>
-            <p class="card__body" data-i18n="sus.2.p">Temps d'exécution, mémoire, énergie : mesurer d'abord permet de cibler les optimisations qui réduisent vraiment l'empreinte d'un programme.</p>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M5 20h14M6 8h12M6 8l-3 6a3 3 0 0 0 6 0L6 8zM18 8l-3 6a3 3 0 0 0 6 0l-3-6z"/></svg>
+            <p class="card__label" data-i18n-html="sus.2.l">Théâtre interactif · 1<sup>re</sup> année</p>
+            <h4 class="card__title card__title--sm" data-i18n="sus.2.t">Le procès de King-Kong</h4>
+            <p class="card__body" data-i18n="sus.2.p">Une pièce participative sur les violences sexistes et sexuelles (VSS) et leurs conséquences, à laquelle j'ai assisté et pris part.</p>
           </article>
-          <article class="card card--tint card--todo">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg>
-            <h4 class="card__title card__title--sm"><span data-i18n="sus.3.t">Engagement citoyen</span> <span class="tag tag--todo" data-i18n="todo.fill">À compléter</span></h4>
-            <p class="card__body" data-i18n="sus.3.p">40 heures d'engagement sont à valider d'ici le S9 : tutorat, association étudiante, bénévolat… Cette rubrique s'enrichira au fil de mes actions.</p>
+          <article class="card card--tint">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>
+            <p class="card__label" data-i18n="sus.3.l">Festival · Toulouse</p>
+            <h4 class="card__title card__title--sm" data-i18n="sus.3.t">Le festival Futur Proche</h4>
+            <p class="card__body" data-i18n="sus.3.p">Avec l'ENSEEIHT et les universités toulousaines : conférences, ateliers et présentations sur les enjeux climatiques, abordés sous un angle scientifique à travers des innovations existantes ou en cours de développement.</p>
           </article>
         </div>
+        <p class="sus__todo" data-reveal="up"><span class="tag tag--todo" data-i18n="todo.soon">À venir</span> <span data-i18n="sus.4">Engagement citoyen : 40 heures à valider d'ici le S9.</span></p>
       </div>
     </section>
 
@@ -420,8 +435,8 @@
     <section class="section section--band" id="sport" data-section aria-labelledby="sport-title">
       <div class="container section__head">
         <p class="eyebrow" data-reveal="up"><span class="eyebrow__num">05</span><span data-i18n="tab.sport">Sport &amp; activités</span></p>
-        <h2 class="h2" id="sport-title" data-split data-i18n="sport.title">L'esprit d'équipe, sur le terrain d'abord.</h2>
-        <p class="lead" data-reveal="up" data-i18n="sport.lead">Le sport m'a appris la régularité et le jeu collectif, deux qualités que je retrouve dans les projets d'équipe.</p>
+        <h2 class="h2" id="sport-title" data-split data-i18n="sport.title">Sur le terrain, et en dehors.</h2>
+        <p class="lead" data-reveal="up" data-i18n="sport.lead">Le football m'a appris la régularité et le jeu collectif. Mes loisirs, eux, nourrissent ma curiosité.</p>
       </div>
       <div class="container sport">
         <article class="card card--feature" data-reveal="up">
@@ -440,10 +455,24 @@
             </circle>
           </svg>
         </article>
-        <article class="card card--line card--todo" data-reveal="up">
-          <p class="card__label"><span data-i18n="sport.other">Autres activités</span> <span class="tag tag--todo" data-i18n="todo.fill">À compléter</span></p>
-          <p class="card__body" data-i18n="sport.otherP">Clubs et associations de l'ENSEEIHT, projets personnels, centres d'intérêt : cette rubrique grandira au fil des trois années.</p>
-        </article>
+        <div class="grid-3" data-reveal="up" data-stagger>
+          <article class="card card--tint">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 6h9A5.5 5.5 0 0 1 22 11.5v1.8a3.7 3.7 0 0 1-6.6 2.3L14.4 14H9.6l-1 1.6A3.7 3.7 0 0 1 2 13.3v-1.8A5.5 5.5 0 0 1 7.5 6z"/><path d="M6.5 10h3M8 8.5v3M15.5 9.5h.01M17.5 11.5h.01"/></svg>
+            <p class="card__label" data-i18n="hob.label">Centre d'intérêt</p>
+            <h4 class="card__title card__title--sm" data-i18n="hob.games.t">Jeux vidéo</h4>
+            <p class="card__body" data-i18n="hob.games.p">Surtout des jeux d'exploration et de réflexion.</p>
+          </article>
+          <article class="card card--tint">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h14M8 7h8"/></svg>
+            <p class="card__label" data-i18n="hob.label">Centre d'intérêt</p>
+            <h4 class="card__title card__title--sm" data-i18n="hob.read.t">Lecture</h4>
+            <p class="card__body" data-i18n="hob.read.p">Des romans, pour le plaisir.</p>
+          </article>
+          <article class="card card--line card--todo">
+            <p class="card__label"><span data-i18n="sport.other">Autres activités</span> <span class="tag tag--todo" data-i18n="todo.soon">À venir</span></p>
+            <p class="card__body" data-i18n="sport.otherP">Clubs et associations de l'ENSEEIHT, projets personnels : cette rubrique grandira au fil des trois années.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -464,7 +493,7 @@
         <article class="card card--line" data-reveal="up" data-tilt>
           <span class="card__glow" aria-hidden="true"></span>
           <p class="card__label" data-i18n="exp.label">Été 2022 · Job d'été</p>
-          <h4 class="card__title card__title--sm" data-i18n="exp.t">Hôtel-restaurant — Jura Hôtel Restaurant Le Panoramic</h4>
+          <h4 class="card__title card__title--sm" data-i18n="exp.t">Hôtel-restaurant Le Panoramic</h4>
           <p class="card__place">Saint-Claude (Jura)</p>
           <p class="card__body" data-i18n="exp.p">Plonge, nettoyage et dressage de la salle pour le service des petits-déjeuners.</p>
           <p class="card__note" data-i18n="exp.n">Ce que j'en retiens : rigueur, rapidité et travail en équipe, dans un service où tout doit être prêt à l'heure.</p>
@@ -472,8 +501,8 @@
         <div id="internships">
           <h3 class="h3" data-reveal="up" data-i18n="int.title">Stages</h3>
           <ul class="rows" data-reveal="up" data-stagger>
-            <li class="rows__item"><span class="rows__key">S6 · <span data-i18n="int.1.d">été 2027</span></span><span class="rows__val" data-i18n="int.1.t">Stage de 1<sup>re</sup> année : laboratoire ou entreprise, calcul et données</span><span class="tag tag--live tag--sm"><span class="tag__dot"></span><span data-i18n="int.search">En recherche</span></span></li>
-            <li class="rows__item"><span class="rows__key">S8 · 2028</span><span class="rows__val" data-i18n="int.2.t">Stage de 2<sup>e</sup> année, en lien avec le parcours HPC &amp; Big Data</span><span class="tag tag--sm" data-i18n="int.soon">À venir</span></li>
+            <li class="rows__item"><span class="rows__key">S6 · <span data-i18n="int.1.d">juin – août 2027</span></span><span class="rows__val" data-i18n="int.1.t">Stage ouvrier de 6 à 8 semaines</span><span class="tag tag--live tag--sm"><span class="tag__dot"></span><span data-i18n="int.search">En recherche</span></span></li>
+            <li class="rows__item"><span class="rows__key">S8 · 2028</span><span class="rows__val" data-i18n="int.2.t">Stage de 2<sup>e</sup> année, en lien avec le parcours choisi</span><span class="tag tag--sm" data-i18n="int.soon">À venir</span></li>
           </ul>
         </div>
       </div>
@@ -498,60 +527,50 @@
               <h4 class="card__title" data-i18n="pitch.t">Mon pitch en anglais, en 2 à 3 minutes</h4>
               <ol class="pitch__steps">
                 <li><b data-i18n="pitch.s1">Présent</b><span data-i18n="pitch.s1p">Élève ingénieur en Sciences du Numérique à l'ENSEEIHT</span></li>
-                <li><b data-i18n="pitch.s2">Passé</b><span data-i18n="pitch.s2p">Prépa MP2I – MPI, TIPE et solveur de Suguru</span></li>
-                <li><b data-i18n="pitch.s3">Futur</b><span data-i18n="pitch.s3p">HPC &amp; Big Data, 3 role models, 3 projets de mobilité</span></li>
+                <li><b data-i18n="pitch.s2">Passé</b><span data-i18n="pitch.s2p">Deux années de prépa MP2I – MPI à Dijon</span></li>
+                <li><b data-i18n="pitch.s3">Futur</b><span data-i18n="pitch.s3p">Mes 3 role models et mes 3 projets de mobilité</span></li>
               </ol>
             </div>
           </div>
 
           <div class="docs" data-reveal="up" data-stagger>
-            <a class="doc" href="CV.pdf" target="_blank" rel="noopener" data-magnetic>
+            <a class="doc" href="assets/cv/Mael-Daoud-Beurteaux-CV-FR.pdf" target="_blank" rel="noopener" data-magnetic>
               <span class="doc__ico">PDF</span><span class="doc__txt"><b data-i18n="doc.cvfr">CV en français</b><small data-i18n="doc.dl">Télécharger</small></span><span class="doc__arrow" aria-hidden="true">↗</span>
             </a>
-            <a class="doc" href="CV_EN.pdf" target="_blank" rel="noopener" data-magnetic>
-              <span class="doc__ico">PDF</span><span class="doc__txt"><b data-i18n="doc.cven">CV in English</b><small><span data-i18n="doc.dl">Télécharger</span> <span class="tag tag--todo tag--sm" data-i18n="todo.add">À ajouter</span></small></span><span class="doc__arrow" aria-hidden="true">↗</span>
+            <a class="doc" href="assets/cv/Mael-Daoud-Beurteaux-CV-EN.pdf" target="_blank" rel="noopener" data-magnetic>
+              <span class="doc__ico">PDF</span><span class="doc__txt"><b data-i18n="doc.cven">CV in English</b><small data-i18n="doc.dl">Télécharger</small></span><span class="doc__arrow" aria-hidden="true">↗</span>
             </a>
-            <a class="doc" href="https://www.linkedin.com/in/ma%C3%ABl-daoud-beurteaux-770342427/?locale=fr_FR" target="_blank" rel="noopener" data-magnetic>
+            <a class="doc" href="https://www.linkedin.com/in/mael-db/?locale=fr_FR" target="_blank" rel="noopener" data-magnetic>
               <span class="doc__ico doc__ico--in">in</span><span class="doc__txt"><b data-i18n="doc.infr">LinkedIn en français</b><small data-i18n="doc.view">Voir le profil</small></span><span class="doc__arrow" aria-hidden="true">↗</span>
             </a>
-            <a class="doc" href="https://www.linkedin.com/in/ma%C3%ABl-daoud-beurteaux-770342427/?locale=en_US" target="_blank" rel="noopener" data-magnetic>
+            <a class="doc" href="https://www.linkedin.com/in/mael-db/?locale=en_US" target="_blank" rel="noopener" data-magnetic>
               <span class="doc__ico doc__ico--in">in</span><span class="doc__txt"><b data-i18n="doc.inen">LinkedIn in English</b><small data-i18n="doc.view">Voir le profil</small></span><span class="doc__arrow" aria-hidden="true">↗</span>
             </a>
           </div>
 
           <div id="role-models">
-            <h4 class="h3 block-title" data-reveal="up" data-i18n="rm.title">3 role models analysés</h4>
-            <div class="grid-3" data-reveal="up" data-stagger>
-              <article class="card card--white">
-                <p class="card__label"><span class="num">01</span> <span data-i18n="mp.1.l">Profil HPC</span> <span class="tag tag--todo" data-i18n="todo.fill">À compléter</span></p>
-                <h5 class="card__title card__title--sm" data-i18n="rm.name">Prénom Nom — poste, entreprise</h5>
+            <h4 class="h3 block-title" data-reveal="up" data-i18n="rm.title">Mes role models</h4>
+            <div class="duo" data-reveal="up">
+              <article class="card card--white" data-tilt>
+                <span class="card__glow" aria-hidden="true"></span>
+                <p class="card__label"><span class="num">01</span> <span data-i18n="rm.1.l">Entretien via My Job Glasses</span></p>
+                <h5 class="card__title">Pascal Traverse</h5>
+                <p class="card__place" data-i18n="rm.1.role">Alumni de l'ENSEEIHT · toute sa carrière chez Airbus</p>
                 <dl class="facts">
-                  <div><dt data-i18n="rm.src">Source</dt><dd data-i18n="rm.srcv">My Job Glasses ou entretien alumni</dd></div>
-                  <div><dt data-i18n="rm.path">Parcours</dt><dd>—</dd></div>
-                  <div><dt data-i18n="rm.keep">Ce que je retiens</dt><dd>—</dd></div>
+                  <div><dt data-i18n="rm.path">Parcours</dt><dd data-i18n="rm.1.path">De la conception des commandes de vol de l'A320 aux défis de production de l'A380, puis aux systèmes autonomes.</dd></div>
+                  <div><dt data-i18n="rm.keep">Ce que je retiens</dt><dd data-i18n="rm.1.keep">Une vision plus claire de l'industrie aéronautique et des évolutions possibles dans une carrière d'ingénieur, et de précieux conseils pour la suite.</dd></div>
                 </dl>
-                <a class="link-arrow" href="#mobility-projects"><span data-i18n="rm.mob1">Projet de mobilité n° 1</span> <span class="link-arrow__chev" aria-hidden="true">›</span></a>
               </article>
-              <article class="card card--white">
-                <p class="card__label"><span class="num">02</span> <span data-i18n="mp.2.l">Profil data</span> <span class="tag tag--todo" data-i18n="todo.fill">À compléter</span></p>
-                <h5 class="card__title card__title--sm" data-i18n="rm.name">Prénom Nom — poste, entreprise</h5>
-                <dl class="facts">
-                  <div><dt data-i18n="rm.src">Source</dt><dd data-i18n="rm.srcv">My Job Glasses ou entretien alumni</dd></div>
-                  <div><dt data-i18n="rm.path">Parcours</dt><dd>—</dd></div>
-                  <div><dt data-i18n="rm.keep">Ce que je retiens</dt><dd>—</dd></div>
-                </dl>
-                <a class="link-arrow" href="#mobility-projects"><span data-i18n="rm.mob2">Projet de mobilité n° 2</span> <span class="link-arrow__chev" aria-hidden="true">›</span></a>
-              </article>
-              <article class="card card--white">
-                <p class="card__label"><span class="num">03</span> <span data-i18n="mp.3.l">Profil recherche</span> <span class="tag tag--todo" data-i18n="todo.fill">À compléter</span></p>
-                <h5 class="card__title card__title--sm" data-i18n="rm.name">Prénom Nom — poste, entreprise</h5>
-                <dl class="facts">
-                  <div><dt data-i18n="rm.src">Source</dt><dd data-i18n="rm.srcv">My Job Glasses ou entretien alumni</dd></div>
-                  <div><dt data-i18n="rm.path">Parcours</dt><dd>—</dd></div>
-                  <div><dt data-i18n="rm.keep">Ce que je retiens</dt><dd>—</dd></div>
-                </dl>
-                <a class="link-arrow" href="#mobility-projects"><span data-i18n="rm.mob3">Projet de mobilité n° 3</span> <span class="link-arrow__chev" aria-hidden="true">›</span></a>
-              </article>
+              <div class="duo__side">
+                <article class="card card--white card--todo">
+                  <p class="card__label"><span class="num">02</span> <span class="tag tag--todo" data-i18n="todo.soon">À venir</span></p>
+                  <p class="card__body" data-i18n="rm.2.p">Deuxième entretien à venir, via My Job Glasses ou le réseau des anciens de l'ENSEEIHT.</p>
+                </article>
+                <article class="card card--white card--todo">
+                  <p class="card__label"><span class="num">03</span> <span class="tag tag--todo" data-i18n="todo.soon">À venir</span></p>
+                  <p class="card__body" data-i18n="rm.3.p">Troisième entretien à venir.</p>
+                </article>
+              </div>
             </div>
           </div>
         </div>
@@ -570,7 +589,7 @@
         </div>
         <div class="hero__ctas" data-reveal="up">
           <a class="btn btn--primary" href="mailto:maeldaoudbeurteaux@gmail.com" data-magnetic data-i18n="contact.write">M'écrire</a>
-          <a class="btn btn--ghost" href="https://www.linkedin.com/in/ma%C3%ABl-daoud-beurteaux-770342427/" target="_blank" rel="noopener" data-magnetic data-i18n="contact.linkedin">Me suivre sur LinkedIn</a>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/mael-db/" target="_blank" rel="noopener" data-magnetic data-i18n="contact.linkedin">Me suivre sur LinkedIn</a>
         </div>
       </div>
     </section>
@@ -593,20 +612,20 @@
       </nav>
       <div class="footer__col">
         <p class="footer__title">Documents</p>
-        <a href="CV.pdf" target="_blank" rel="noopener" data-i18n="doc.cvfr">CV en français</a>
-        <a href="CV_EN.pdf" target="_blank" rel="noopener" data-i18n="doc.cven">CV in English</a>
+        <a href="assets/cv/Mael-Daoud-Beurteaux-CV-FR.pdf" target="_blank" rel="noopener" data-i18n="doc.cvfr">CV en français</a>
+        <a href="assets/cv/Mael-Daoud-Beurteaux-CV-EN.pdf" target="_blank" rel="noopener" data-i18n="doc.cven">CV in English</a>
         <a href="#pitch" data-i18n="foot.pitch">Pitch vidéo</a>
       </div>
       <div class="footer__col">
         <p class="footer__title">Contact</p>
         <a href="mailto:maeldaoudbeurteaux@gmail.com">maeldaoudbeurteaux@gmail.com</a>
-        <a href="https://www.linkedin.com/in/ma%C3%ABl-daoud-beurteaux-770342427/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/mael-db/" target="_blank" rel="noopener">LinkedIn</a>
         <span>Toulouse, France</span>
       </div>
     </div>
     <div class="container footer__bottom">
       <span>© 2026 Maël Daoud-Beurteaux</span>
-      <span data-i18n="foot.version">Version 1.0 · S5 « Launch » · octobre 2026</span>
+      <span data-i18n="foot.version">Version 1.1 · S5 « Launch » · octobre 2026</span>
       <span data-i18n="foot.static">Site statique, sans cookie</span>
     </div>
   </footer>

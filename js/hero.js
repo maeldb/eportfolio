@@ -13,6 +13,15 @@
   var gap = 26, dpr = 1, w = 0, h = 0, dots = [];
   var mouse = { x: -1e4, y: -1e4, active: false };
   var raf = 0, visible = true;
+  var colors = { dot: 'rgba(131, 155, 200, 0.34)', hot: '83, 58, 253' };
+
+  // Les couleurs viennent du thème (variables CSS --dot et --dot-hot).
+  function readColors() {
+    var cs = getComputedStyle(document.documentElement);
+    colors.dot = cs.getPropertyValue('--dot').trim() || colors.dot;
+    colors.hot = cs.getPropertyValue('--dot-hot').trim() || colors.hot;
+    if (reduced && w) draw(0);
+  }
 
   function resize() {
     var rect = canvas.getBoundingClientRect();
@@ -33,7 +42,7 @@
     var sweep = ((t * 0.00018) % 1.5 - 0.25) * (w + h);
     var hot = [];
 
-    ctx.fillStyle = 'rgba(131, 155, 200, 0.34)';
+    ctx.fillStyle = colors.dot;
     ctx.beginPath();
     for (var i = 0; i < dots.length; i++) {
       var d = dots[i];
@@ -60,7 +69,7 @@
     ctx.fill();
 
     for (var j = 0; j < hot.length; j += 4) {
-      ctx.fillStyle = 'rgba(83, 58, 253, ' + (0.25 + hot[j + 3] * 0.75).toFixed(3) + ')';
+      ctx.fillStyle = 'rgba(' + colors.hot + ', ' + (0.25 + hot[j + 3] * 0.75).toFixed(3) + ')';
       ctx.beginPath();
       ctx.arc(hot[j], hot[j + 1], hot[j + 2], 0, 6.2832);
       ctx.fill();
@@ -94,6 +103,9 @@
     resizeTimer = setTimeout(resize, 150);
   });
 
+  document.addEventListener('themechange', readColors);
+
+  readColors();
   resize();
   start();
 })();

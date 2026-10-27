@@ -1,0 +1,10 @@
+# Support de cours : ne pas publier (droits de l'école)
+FISE_*.pdf
+
+# Configuration locale de l'aperçu
+.claude/
+
+# Fichiers système
+Thumbs.db
+desktop.ini
+.DS_Store
