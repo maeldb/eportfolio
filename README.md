@@ -39,10 +39,9 @@ Pour mettre à jour un CV : remplacer le PDF dans `assets/cv/` en gardant le mê
 
 - [ ] **Pitch vidéo** (2–3 min, en anglais) : renseigner `data-video` sur le bouton `.pitch__frame`
       (lien YouTube, ou chemin d'un fichier comme `assets/video/pitch.mp4`).
-- [x] Role model n° 1 : Pascal Traverse (Airbus, via My Job Glasses).
-- [ ] **Role models n° 2 et 3** (section `#role-models`) : remplacer les cartes « À venir » après les entretiens.
-- [x] Projet de mobilité n° 1 : MSc à l'EPFL (free mover), spécialisations Computer Systems et AI & Data Science.
-- [ ] **Projets de mobilité n° 2 et 3** (section `#mobility-projects`) : remplacer les cartes « À venir ».
+- [x] Role models (prénoms seuls) : Pascal (Airbus), Guillaume (Thales Alenia Space), Olivier (Richemont).
+      Relire les rubriques « Ce que j'en retiens » de Guillaume et d'Olivier, rédigées à partir de leurs profils.
+- [x] Mobilité : EPFL, Imperial College London, Georgia Tech (programmes liés aux parcours HPC / systèmes).
 - [x] Développement durable : Fresque du Climat, Le procès de King-Kong, festival Futur Proche.
 - [ ] **Engagement citoyen** (40 h d'ici le S9) et **autres activités** (clubs, associations) : à venir.
 - [ ] **LinkedIn en anglais** : ajouter un profil secondaire en anglais sur LinkedIn (le lien `?locale=en_US` l'affiche).
@@ -64,6 +63,16 @@ git push
 
 Le site se met à jour une à deux minutes après l'envoi. Le `.gitignore` empêche de publier
 le PDF du cours (`FISE_…pdf`) et le dossier `.claude/`.
+
+## Crédits des images
+
+- Logos des langages et outils : projet [Devicon](https://devicon.dev) (licence MIT) ; logo Ada : Wikimedia Commons (CC0) ;
+  icône SQL et drapeaux : dessinés pour ce site.
+- Photos d'illustration (`assets/img/activites/`), Wikimedia Commons :
+  [Fresque du climat](https://commons.wikimedia.org/wiki/File:Fresque_du_climat.jpg) — Xfigpower, CC BY-SA 3.0 ;
+  [rideau de scène](https://commons.wikimedia.org/wiki/File:Curtain-939464.jpg) — tommybuddy, CC0 ;
+  [Fête de la science à Reims](https://commons.wikimedia.org/wiki/File:Fete_de_la_science_Reims_1.jpg) — Protogonos69, CC BY-SA 4.0.
+  Les crédits sont aussi affichés sur chaque photo du site : à conserver si tu gardes ces images.
 
 ## Notes
 

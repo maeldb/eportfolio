@@ -13,13 +13,14 @@
   var gap = 26, dpr = 1, w = 0, h = 0, dots = [];
   var mouse = { x: -1e4, y: -1e4, active: false };
   var raf = 0, visible = true;
-  var colors = { dot: 'rgba(131, 155, 200, 0.34)', hot: '83, 58, 253' };
+  var colors = { dot: 'rgba(131, 155, 200, 0.34)', hot: '83, 58, 253', sweep: '255, 107, 74' };
 
-  // Les couleurs viennent du thème (variables CSS --dot et --dot-hot).
+  // Les couleurs viennent du thème : indigo autour du curseur, corail pour le balayage.
   function readColors() {
     var cs = getComputedStyle(document.documentElement);
     colors.dot = cs.getPropertyValue('--dot').trim() || colors.dot;
     colors.hot = cs.getPropertyValue('--dot-hot').trim() || colors.hot;
+    colors.sweep = cs.getPropertyValue('--dot-sweep').trim() || colors.sweep;
     if (reduced && w) draw(0);
   }
 
@@ -62,14 +63,17 @@
       var band = Math.max(0, 1 - Math.abs(d.x + d.y - sweep) / 70);
       var rad = 0.8 + 0.55 * (wave + 1) * 0.5 + band * 0.7;
       var px = d.x + d.ox, py = d.y + d.oy + wave * 2.2;
-      if (d.a > 0.04 || band > 0.05) { hot.push(px, py, rad + d.a * 1.6, Math.max(d.a, band * 0.55)); continue; }
+      if (d.a > 0.04 || band > 0.05) {
+        hot.push(px, py, rad + d.a * 1.6, Math.max(d.a, band * 0.55), d.a >= band * 0.55 ? 0 : 1);
+        continue;
+      }
       ctx.moveTo(px + rad, py);
       ctx.arc(px, py, rad, 0, 6.2832);
     }
     ctx.fill();
 
-    for (var j = 0; j < hot.length; j += 4) {
-      ctx.fillStyle = 'rgba(' + colors.hot + ', ' + (0.25 + hot[j + 3] * 0.75).toFixed(3) + ')';
+    for (var j = 0; j < hot.length; j += 5) {
+      ctx.fillStyle = 'rgba(' + (hot[j + 4] ? colors.sweep : colors.hot) + ', ' + (0.25 + hot[j + 3] * 0.75).toFixed(3) + ')';
       ctx.beginPath();
       ctx.arc(hot[j], hot[j + 1], hot[j + 2], 0, 6.2832);
       ctx.fill();

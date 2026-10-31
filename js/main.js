@@ -64,6 +64,11 @@
     $$('[data-split]').forEach(function (el) { split(el, el.getAttribute('data-split') === 'chars' ? 'chars' : 'mask'); });
     $$('[data-scrub]').forEach(function (el) { split(el, 'plain'); });
     scrubWords = $$('[data-scrub] .w');
+    // Nom de famille : position de chaque lettre dans le dégradé indigo → corail
+    var letters = $$('.hero__last .w__i');
+    letters.forEach(function (l, k) {
+      l.style.setProperty('--t', (letters.length > 1 ? k / (letters.length - 1) * 100 : 0).toFixed(1) + '%');
+    });
   }
   var scrubWords = [];
   splitAll();

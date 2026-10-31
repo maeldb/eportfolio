@@ -96,6 +96,7 @@
     if (c === N - 1) el.classList.add('last-col');
     if (r === N - 1) el.classList.add('last-row');
     if (GIVENS[r][c]) el.classList.add('is-given');
+    el.style.setProperty('--rc', 'var(--sg-r' + REGIONS[r][c] + ')');
     el.style.setProperty('--d', r + c);
     el.dataset.i = i0;
     gridEl.appendChild(el);
