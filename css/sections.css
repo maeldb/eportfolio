@@ -33,8 +33,6 @@
 }
 .hero__first, .hero__last { display: block; white-space: nowrap; }
 .hero__last { color: var(--indigo); }
-/* Dégradé indigo → corail, lettre par lettre (--t posé par main.js) */
-.hero__last .w__i { color: color-mix(in oklab, var(--coral-ink) var(--t, 0%), var(--indigo)); }
 .hero__lead { margin-top: 32px; max-width: 54ch; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.45; color: var(--slate); }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
 .hero__pitch { margin-top: 28px; }
@@ -76,7 +74,7 @@
 /* ---------- Marquee ---------- */
 .marquee { overflow: hidden; border-top: 1px solid var(--frost); padding: 22px 0; white-space: nowrap; }
 .marquee__track { display: inline-flex; align-items: center; gap: 32px; will-change: transform; font-size: clamp(24px, 3vw, 40px); letter-spacing: -0.02em; }
-.marquee__track i { font-style: normal; color: var(--coral); }
+.marquee__track i { font-style: normal; color: var(--lavender); }
 .marquee__track span { transition: color .3s; }
 .marquee__track span:hover { color: var(--indigo); }
 
@@ -89,7 +87,7 @@
 .pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin-top: 24px; }
 .pillar { position: relative; padding-top: 24px; border-top: 1px solid var(--frost); }
 .pillar::before {
-  content: ""; position: absolute; left: 0; top: -1px; width: 100%; height: 1px; background: linear-gradient(90deg, var(--indigo), var(--coral));
+  content: ""; position: absolute; left: 0; top: -1px; width: 100%; height: 1px; background: var(--indigo);
   transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease-out);
 }
 .pillar:hover::before { transform: scaleX(1); }
@@ -117,15 +115,13 @@
 .tl-card__title { margin-top: auto; font-size: 24px; font-weight: 300; line-height: 1.12; letter-spacing: -0.02em; }
 .tl-card__place { font-size: 14px; color: var(--slate); }
 .tl-card__text { font-size: 15px; color: var(--steel); line-height: 1.45; }
-.tl-card.is-now { border-color: var(--coral); background: linear-gradient(180deg, var(--coral-wash), var(--white) 70%); }
-.tl-card.is-now .tag { background: var(--coral-wash); color: var(--coral-ink); }
+.tl-card.is-now { border-color: var(--indigo); background: linear-gradient(180deg, var(--wash), var(--white) 70%); }
 .tl-card.is-next { border-style: dashed; border-color: var(--lilac); }
 .tl-card.is-next .tl-card__title { color: var(--steel); }
 .tl-card::before { content: ""; position: absolute; top: 32px; right: 32px; width: 8px; height: 8px; border: 1.5px solid var(--indigo); border-radius: 1px; }
-.tl-card.is-past::before { background: var(--indigo); }
-.tl-card.is-now::before { background: var(--coral); border-color: var(--coral); }
+.tl-card.is-past::before, .tl-card.is-now::before { background: var(--indigo); }
 .tl-rail { height: 1px; margin-top: 48px; background: var(--frost); overflow: hidden; }
-.tl-rail__fill { display: block; height: 100%; background: linear-gradient(90deg, var(--indigo), var(--coral)); transform: scaleX(var(--p, 0)); transform-origin: left; }
+.tl-rail__fill { display: block; height: 100%; background: var(--indigo); transform: scaleX(var(--p, 0)); transform-origin: left; }
 
 /* ---------- Cartes ---------- */
 .card {
@@ -137,7 +133,7 @@
 .card[data-tilt] { transform-style: preserve-3d; transition: border-color .4s, transform .7s var(--ease-out); }
 .card[data-tilt]::after {
   content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
-  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--coral), var(--indigo) 40%, transparent 72%);
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--indigo), transparent 70%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   opacity: 0; transition: opacity .4s;
@@ -443,7 +439,7 @@
 .contact__mail { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 40px; }
 .contact__addr {
   font-size: clamp(22px, 3.6vw, 46px); letter-spacing: -0.03em; overflow-wrap: anywhere;
-  background: linear-gradient(90deg, var(--indigo), var(--coral)) 0 100% / 0 2px no-repeat;
+  background: linear-gradient(var(--indigo), var(--indigo)) 0 100% / 0 2px no-repeat;
   transition: background-size .6s var(--ease-out), color .3s;
 }
 .contact__addr:hover { color: var(--indigo); background-size: 100% 2px; }

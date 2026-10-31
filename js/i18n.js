@@ -176,7 +176,7 @@
     'contact.copy': 'Copy address', 'contact.write': 'Write to me', 'contact.linkedin': 'Follow me on LinkedIn',
     'foot.tag': 'Computer Science Engineering Student · ENSEEIHT, Toulouse INP',
     'foot.pitch': 'Video pitch',
-    'foot.version': 'Version 1.2 · S5 “Launch” · October 2026',
+    'foot.version': 'Version 1.3 · S5 “Launch” · October 2026',
     'foot.static': 'Static site, no cookies'
   };
 

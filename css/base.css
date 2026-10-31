@@ -20,13 +20,6 @@
   --deep: #182659;
   --amethyst: #7f71e6;
 
-  /* Deuxième couleur : corail (traits et points) et corail profond (texte, contraste suffisant) */
-  --coral: #ff6b4a;
-  --coral-ink: #cf3a1c;
-  --coral-wash: #fff0eb;
-  --coral-line: #ffc9bb;
-  --dot-sweep: 255, 107, 74;
-
   /* Couleurs fixes ou propres au thème */
   --accent: #533afd;
   --accent-hover: #182659;
@@ -75,11 +68,6 @@
   --lilac: #2e3a6e;
   --wash: #1b1f52;
   --amethyst: #a297ff;
-  --coral: #ff7a5c;
-  --coral-ink: #ff8a6b;
-  --coral-wash: rgba(255, 122, 92, .12);
-  --coral-line: rgba(255, 122, 92, .4);
-  --dot-sweep: 255, 138, 107;
   --accent-hover: #3b28d1;
   --glass: rgba(6, 27, 49, .7);
   --glass-strong: rgba(6, 27, 49, .88);
@@ -171,8 +159,8 @@ sup { font-size: .6em; line-height: 0; }
   color: var(--slate);
 }
 .eyebrow__num {
-  font-family: var(--mono); font-size: 11px; color: var(--coral-ink);
-  padding: 2px 6px; border: 1px solid var(--coral-line); border-radius: var(--radius);
+  font-family: var(--mono); font-size: 11px; color: var(--indigo);
+  padding: 2px 6px; border: 1px solid var(--lilac); border-radius: var(--radius);
 }
 .eyebrow--onwash { color: var(--indigo); }
 
@@ -250,9 +238,9 @@ sup { font-size: .6em; line-height: 0; }
 }
 .tag--sm { padding: 3px 9px; font-size: 11px; }
 .tag--todo { background: transparent; color: var(--amethyst); border: 1px dashed var(--lavender); }
-.tag__dot { position: relative; width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+.tag__dot { position: relative; width: 6px; height: 6px; border-radius: 50%; background: var(--indigo); }
 .tag__dot::after {
-  content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--coral);
+  content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--indigo);
   animation: ping 2s var(--ease-out) infinite;
 }
 
