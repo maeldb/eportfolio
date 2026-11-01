@@ -147,8 +147,8 @@
     'int.soon': 'Upcoming',
 
     'cp.lead': 'My video pitch, my CVs, my LinkedIn profile and the three role models that shape my project.',
-    'pitch.soon': 'Video being filmed, available soon',
-    'pitch.t': 'My pitch in English, in 2 to 3 minutes',
+    'pitch.play': 'Play the video · 3 min',
+    'pitch.t': 'My pitch in English, in 3 minutes',
     'pitch.s1': 'Present', 'pitch.s1p': 'Computer Science engineering student at ENSEEIHT',
     'pitch.s2': 'Past', 'pitch.s2p': 'Two years of MP2I – MPI prep classes in Dijon',
     'pitch.s3': 'Future', 'pitch.s3p': 'My 3 role models and my 3 mobility projects',
@@ -176,7 +176,7 @@
     'contact.copy': 'Copy address', 'contact.write': 'Write to me', 'contact.linkedin': 'Follow me on LinkedIn',
     'foot.tag': 'Computer Science Engineering Student · ENSEEIHT, Toulouse INP',
     'foot.pitch': 'Video pitch',
-    'foot.version': 'Version 1.3 · S5 “Launch” · October 2026',
+    'foot.version': 'Version 1.4 · S5 “Launch” · November 2026',
     'foot.static': 'Static site, no cookies'
   };
 

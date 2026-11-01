@@ -376,25 +376,42 @@
     });
   });
 
-  /* ---------- Pitch vidéo ---------- */
+  /* ---------- Pitch vidéo ----------
+     Fichier : la vidéo remplace le bouton à l'approche de la section (sa 1re image sert d'aperçu).
+     Lien YouTube : chargé seulement au clic, via youtube-nocookie. */
   $$('.pitch__frame').forEach(function (frame) {
-    frame.addEventListener('click', function () {
-      var src = (frame.getAttribute('data-video') || '').trim();
-      if (!src) { notify(t('pitch.none')); return; }
-      var yt = src.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+    var src = (frame.getAttribute('data-video') || '').trim();
+    var yt = src.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+    function mount(autoplay) {
+      if (!frame.isConnected) return;
+      var holder = document.createElement('div');
+      holder.className = 'pitch__frame pitch__frame--media';
       var media;
       if (yt) {
         media = document.createElement('iframe');
         media.src = 'https://www.youtube-nocookie.com/embed/' + yt[1] + '?autoplay=1&rel=0';
         media.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
         media.title = 'Elevator pitch';
+        holder.style.setProperty('--ratio', '16 / 9');
       } else {
         media = document.createElement('video');
-        media.src = src; media.controls = true; media.autoplay = true; media.playsInline = true;
+        media.src = src + '#t=0.1';
+        media.controls = true; media.preload = 'metadata'; media.playsInline = true; media.autoplay = autoplay;
+        media.setAttribute('aria-label', 'Elevator pitch');
+        media.addEventListener('loadedmetadata', function () {
+          if (media.videoWidth) holder.style.setProperty('--ratio', media.videoWidth + ' / ' + media.videoHeight);
+        });
       }
-      frame.replaceWith(Object.assign(document.createElement('div'), { className: 'pitch__frame' }));
-      $('#pitch .pitch__frame').appendChild(media);
-    });
+      holder.appendChild(media);
+      frame.replaceWith(holder);
+    }
+    frame.addEventListener('click', function () { if (src) mount(true); else notify(t('pitch.none')); });
+    if (src && !yt && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { io.disconnect(); mount(false); }
+      }, { rootMargin: '300px 0px' });
+      io.observe(frame);
+    }
   });
 
   /* ---------- Thème clair / sombre ---------- */

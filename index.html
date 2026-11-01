@@ -534,15 +534,15 @@
           </div>
 
           <div class="pitch" id="pitch">
-            <!-- Pour ajouter la vidéo : mettre un lien YouTube dans data-video (ex. https://www.youtube.com/watch?v=XXXX)
-                 ou le chemin d'un fichier local (ex. assets/video/pitch.mp4). Vide = message « bientôt disponible ». -->
-            <button class="pitch__frame" type="button" data-video="" data-cursor-label="Play">
+            <!-- data-video : chemin d'un fichier (assets/video/pitch.mp4) ou lien YouTube.
+                 Un fichier se charge à l'approche de la section ; un lien YouTube, seulement au clic. -->
+            <button class="pitch__frame" type="button" data-video="assets/video/pitch.mp4" data-cursor-label="Play">
               <span class="pitch__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-              <span class="pitch__msg" data-i18n="pitch.soon">Vidéo en cours de tournage, bientôt disponible</span>
+              <span class="pitch__msg" data-i18n="pitch.play">Lancer la vidéo · 3 min</span>
             </button>
             <div class="pitch__copy">
               <p class="card__label">Elevator pitch · Unique Value Proposition</p>
-              <h4 class="card__title" data-i18n="pitch.t">Mon pitch en anglais, en 2 à 3 minutes</h4>
+              <h4 class="card__title" data-i18n="pitch.t">Mon pitch en anglais, en 3 minutes</h4>
               <ol class="pitch__steps">
                 <li><b data-i18n="pitch.s1">Présent</b><span data-i18n="pitch.s1p">Élève ingénieur en Sciences du Numérique à l'ENSEEIHT</span></li>
                 <li><b data-i18n="pitch.s2">Passé</b><span data-i18n="pitch.s2p">Deux années de prépa MP2I – MPI à Dijon</span></li>
@@ -664,7 +664,7 @@
     </div>
     <div class="container footer__bottom">
       <span>© 2026 Maël Daoud-Beurteaux</span>
-      <span data-i18n="foot.version">Version 1.3 · S5 « Launch » · octobre 2026</span>
+      <span data-i18n="foot.version">Version 1.4 · S5 « Launch » · novembre 2026</span>
       <span data-i18n="foot.static">Site statique, sans cookie</span>
     </div>
   </footer>

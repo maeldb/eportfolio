@@ -37,8 +37,8 @@ Pour mettre à jour un CV : remplacer le PDF dans `assets/cv/` en gardant le mê
 
 ## À compléter avant le 1er novembre
 
-- [ ] **Pitch vidéo** (2–3 min, en anglais) : renseigner `data-video` sur le bouton `.pitch__frame`
-      (lien YouTube, ou chemin d'un fichier comme `assets/video/pitch.mp4`).
+- [x] Pitch vidéo : `assets/video/pitch.mp4` (3 min, MP4 H.264). Pour la remplacer, garder le même nom de fichier,
+      ou changer `data-video` sur le bouton `.pitch__frame` (un lien YouTube fonctionne aussi).
 - [x] Role models (prénoms seuls) : Pascal (Airbus), Guillaume (Thales Alenia Space), Olivier (Richemont).
       Relire les rubriques « Ce que j'en retiens » de Guillaume et d'Olivier, rédigées à partir de leurs profils.
 - [x] Mobilité : EPFL, Imperial College London, Georgia Tech (programmes liés aux parcours HPC / systèmes).
