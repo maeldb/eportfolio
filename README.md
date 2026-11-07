@@ -72,6 +72,10 @@ le PDF du cours (`FISE_…pdf`) et le dossier `.claude/`.
   [Fresque du climat](https://commons.wikimedia.org/wiki/File:Fresque_du_climat.jpg) — Xfigpower, CC BY-SA 3.0 ;
   [rideau de scène](https://commons.wikimedia.org/wiki/File:Curtain-939464.jpg) — tommybuddy, CC0 ;
   [Fête de la science à Reims](https://commons.wikimedia.org/wiki/File:Fete_de_la_science_Reims_1.jpg) — Protogonos69, CC BY-SA 4.0.
+- Photos des écoles (`assets/img/ecoles/`), Wikimedia Commons :
+  [EPFL, Rolex Learning Center](https://commons.wikimedia.org/wiki/File:EPFL_Rolex_Learning_Center_@_EPFL_@_Lausanne_(36524217310).jpg) — Guilhem Vellut, CC BY 2.0 ;
+  [Imperial, Royal School of Mines](https://commons.wikimedia.org/wiki/File:Royal_School_of_Mines_Imperial_College_London_2020_02.jpg) — Julian Herzog, CC BY 4.0 ;
+  [Georgia Tech, Tech Tower](https://commons.wikimedia.org/wiki/File:Tech_Tower_Building_-_10.jpg) — Mistercontributer, CC0.
   Les crédits sont aussi affichés sur chaque photo du site : à conserver si tu gardes ces images.
 
 ## Notes

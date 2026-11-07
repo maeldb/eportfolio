@@ -243,6 +243,30 @@
 .sg__grid.is-locked .sg-cell { cursor: default; }
 .sg__grid.is-intro .sg-cell { animation: cell-in .6s var(--ease-out) both; animation-delay: calc(var(--d, 0) * 45ms); }
 .sg-cell.is-try { --ov: rgba(83, 58, 253, .18); }
+
+/* Résolution animée : candidats, case examinée, région analysée, propagation */
+.sg-cell { position: relative; }
+.sg-cell .pm {
+  display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; justify-items: center;
+  width: 82%; height: 70%; font-family: var(--mono); font-size: clamp(8px, .95vw, 11px); line-height: 1; color: var(--slate);
+}
+.sg-cell .pm i { font-style: normal; transition: opacity .35s, transform .4s var(--ease-out), color .25s; }
+.sg-cell .pm i.is-off { visibility: hidden; }
+.sg-cell .pm i.is-out { opacity: 0; transform: scale(.2) rotate(-20deg); color: var(--danger); }
+.sg-cell .pm i.is-solo { color: var(--indigo); font-weight: 700; transform: scale(1.7); }
+.sg__grid.is-scanning .pm i:not(.is-off) { animation: pm-in .5s var(--ease-out) both; animation-delay: calc(var(--d, 0) * 55ms); }
+.sg-cell .big { display: inline-block; animation: pop .45s var(--ease-out); }
+.sg-cell.is-scan { --ov: rgba(83, 58, 253, .13); }
+.sg-cell.is-focus { z-index: 2; --ov: rgba(83, 58, 253, .22); outline: 2px solid var(--indigo); outline-offset: -2px; animation: focus-pulse .5s ease-in-out infinite alternate; }
+.sg-cell.is-hit { animation: hit .55s var(--ease-out) both; animation-delay: var(--hd, 0ms); }
+.sg-cell.is-placed::after {
+  content: ""; position: absolute; inset: 12%; border: 2px solid var(--indigo); border-radius: var(--radius);
+  pointer-events: none; animation: ring .7s var(--ease-out) forwards;
+}
+.sg-cell.is-guess .big { color: var(--amethyst); font-style: italic; }
+.sg-cell.is-guess::after { border-style: dashed; border-color: var(--amethyst); }
+.sg-cell.is-contra { --ov: var(--danger-wash); animation: shake .45s var(--ease-out); }
+.sg__msg { transition: opacity .25s; }
 .sg-cell.is-set span { animation: pop .35s var(--ease-out); }
 .sg-cell.is-undo { animation: undo .4s var(--ease-out); }
 .sg-cell.is-done { animation: done .8s var(--ease-out) both; animation-delay: calc(var(--d, 0) * 22ms); }

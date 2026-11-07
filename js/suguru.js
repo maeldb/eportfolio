@@ -1,7 +1,10 @@
 /* ==========================================================================
-   Suguru — grille jouable + résolution automatique par backtracking.
+   Suguru — grille jouable + résolution automatique animée.
    Grille 6×6 à solution unique (13 indices), vérifiée hors ligne.
    Jeu : clic ou flèches pour choisir une case, chiffre au clavier ou au pavé.
+   Résolution : propagation de contraintes (case à une seule possibilité,
+   chiffre à une seule place dans sa région), hypothèses + retour arrière
+   seulement si plus rien ne se déduit.
    ========================================================================== */
 (function () {
   'use strict';
@@ -26,7 +29,6 @@
     [1, 0, 2, 0, 0, 2],
     [4, 5, 0, 0, 5, 3]
   ];
-  var EVENTS_PER_SECOND = 110;
 
   var gridEl = root.querySelector('.sg__grid');
   var padBtns = Array.prototype.slice.call(root.querySelectorAll('[data-sg-num]'));
@@ -38,13 +40,14 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var t = function (k) { return window.I18N ? window.I18N.t(k) : k; };
 
-  // ---- Régions : taille et cases membres (index i = ligne * N + colonne)
+  // ---- Régions, voisinage et « pairs » (cases qui ne peuvent pas porter le même chiffre)
   var size = {}, members = {};
   for (var r0 = 0; r0 < N; r0++) for (var c0 = 0; c0 < N; c0++) {
     var id = REGIONS[r0][c0];
     size[id] = (size[id] || 0) + 1;
     (members[id] = members[id] || []).push(r0 * N + c0);
   }
+  var REGION_IDS = Object.keys(members).map(Number);
   function regionOf(i) { return REGIONS[(i / N) | 0][i % N]; }
   function given(i) { return GIVENS[(i / N) | 0][i % N]; }
   function neighbors(i) {
@@ -55,34 +58,103 @@
     }
     return out;
   }
+  var PEERS = [];
+  for (var p0 = 0; p0 < N * N; p0++) {
+    PEERS.push(neighbors(p0).concat(members[regionOf(p0)]).filter(function (j, k, a) {
+      return j !== p0 && a.indexOf(j) === k;
+    }));
+  }
+  function dist(a, b) {
+    return Math.max(Math.abs(((a / N) | 0) - ((b / N) | 0)), Math.abs((a % N) - (b % N)));
+  }
 
-  // ---- Solveur : même logique que la version C (parcours ligne par ligne, valeurs croissantes)
-  function solve() {
-    var grid = [];
-    for (var i = 0; i < N * N; i++) grid.push(given(i));
-    var order = [];
-    for (i = 0; i < N * N; i++) if (!grid[i]) order.push(i);
-    var trace = [];
-    function ok(i, v) {
-      return neighbors(i).every(function (j) { return grid[j] !== v; }) &&
-        members[regionOf(i)].every(function (j) { return grid[j] !== v; });
-    }
-    function bt(k) {
-      if (k === order.length) return true;
-      var i = order[k];
+  // ---- Résolveur : produit la liste des étapes à animer
+  function smartSolve() {
+    var g = [], cand = [];
+    for (var i = 0; i < N * N; i++) g.push(given(i));
+    function candsFor(i) {
+      var out = [];
       for (var v = 1; v <= size[regionOf(i)]; v++) {
-        trace.push(['try', i, v]);
-        if (!ok(i, v)) continue;
-        grid[i] = v; trace.push(['set', i, v]);
-        if (bt(k + 1)) return true;
-        grid[i] = 0; trace.push(['undo', i, v]);
+        if (PEERS[i].every(function (j) { return g[j] !== v; })) out.push(v);
+      }
+      return out;
+    }
+    for (i = 0; i < N * N; i++) cand.push(g[i] ? [] : candsFor(i));
+    var ev = [{ t: 'cands', cand: cand.map(function (c) { return c.slice(); }) }];
+    var st = { d: 0, h: 0, k: 0 };
+    var turn = 0;
+
+    function place(i, v) {
+      g[i] = v; cand[i] = [];
+      var hit = [];
+      PEERS[i].forEach(function (j) {
+        var at = cand[j].indexOf(v);
+        if (!g[j] && at >= 0) { cand[j].splice(at, 1); hit.push(j); }
+      });
+      return hit;
+    }
+    function byCell() {
+      for (var i = 0; i < N * N; i++) if (!g[i] && cand[i].length === 1) return { kind: 'cell', i: i, v: cand[i][0] };
+      return null;
+    }
+    function byRegion() {
+      for (var a = 0; a < REGION_IDS.length; a++) {
+        var reg = REGION_IDS[a], ms = members[reg];
+        for (var v = 1; v <= size[reg]; v++) {
+          if (ms.some(function (j) { return g[j] === v; })) continue;
+          var spots = ms.filter(function (j) { return !g[j] && cand[j].indexOf(v) >= 0; });
+          if (spots.length === 1) return { kind: 'region', i: spots[0], v: v, r: reg };
+        }
+      }
+      return null;
+    }
+    function contradiction() {
+      for (var i = 0; i < N * N; i++) if (!g[i] && !cand[i].length) return i;
+      for (var a = 0; a < REGION_IDS.length; a++) {
+        var reg = REGION_IDS[a], ms = members[reg];
+        for (var v = 1; v <= size[reg]; v++) {
+          if (!ms.some(function (j) { return g[j] === v || (!g[j] && cand[j].indexOf(v) >= 0); })) return ms[0];
+        }
+      }
+      return -1;
+    }
+    function step(kind, i, v, r) {
+      ev.push({ t: 'focus', kind: kind, i: i, v: v, r: r });
+      ev.push({ t: 'place', kind: kind, i: i, v: v });
+      ev.push({ t: 'elim', i: i, v: v, cells: place(i, v) });
+    }
+    function propagate() {
+      for (;;) {
+        var bad = contradiction();
+        if (bad >= 0) { ev.push({ t: 'contra', i: bad }); return false; }
+        // On alterne les deux raisonnements pour une animation plus variée.
+        var a = turn % 2 ? byRegion() || byCell() : byCell() || byRegion();
+        if (!a) return true;
+        turn++; st.d++;
+        step(a.kind, a.i, a.v, a.r);
+      }
+    }
+    function search() {
+      if (!propagate()) return false;
+      if (g.every(Boolean)) return true;
+      var best = -1;
+      for (var i = 0; i < N * N; i++) if (!g[i] && (best < 0 || cand[i].length < cand[best].length)) best = i;
+      var options = cand[best].slice();
+      for (var k = 0; k < options.length; k++) {
+        var saveG = g.slice(), saveC = cand.map(function (c) { return c.slice(); });
+        st.h++;
+        step('guess', best, options[k]);
+        if (search()) return true;
+        st.k++;
+        g = saveG; cand = saveC;
+        ev.push({ t: 'undo', g: g.slice(), cand: cand.map(function (c) { return c.slice(); }) });
       }
       return false;
     }
-    bt(0);
-    return trace;
+    search();
+    return { events: ev, stats: st };
   }
-  var TRACE = solve();
+  var SOLUTION = smartSolve();
 
   // ---- Construction de la grille (une case = un bouton, focus « itinérant »)
   var cells = [], vals = [], S = null;
@@ -102,6 +174,7 @@
     gridEl.appendChild(el);
     cells.push(el);
   }
+  var SOLVE_CLASSES = ['is-focus', 'is-scan', 'is-hit', 'is-placed', 'is-guess', 'is-contra'];
 
   function label(i) {
     var r = (i / N) | 0, c = i % N;
@@ -120,11 +193,11 @@
   function msg(key, args) {
     S.msgKey = key; S.msgArgs = args || {};
     var text = key ? t(key) : '';
-    Object.keys(S.msgArgs).forEach(function (k) { text = text.replace('%' + k, S.msgArgs[k]); });
+    Object.keys(S.msgArgs).forEach(function (k) { text = text.split('%' + k).join(S.msgArgs[k]); });
     msgEl.textContent = text;
   }
 
-  // ---- Chronomètre
+  // ---- Chronomètre (mode jeu)
   function fmtTime(ms) {
     var s = Math.floor(ms / 1000);
     return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
@@ -141,12 +214,14 @@
 
   // ---- État
   function reset() {
-    if (S) { stopTimer(); S.playing = false; cancelAnimationFrame(S.raf); }
+    if (S) { stopTimer(); S.playing = false; clearTimeout(S.next); }
     S = { mode: 'play', sel: -1, elapsed: 0, timer: 0, t0: 0, errors: 0,
-          step: 0, tries: 0, backs: 0, raf: 0, last: 0, acc: 0, lastTry: -1, playing: false };
+          step: 0, ded: 0, elims: 0, playing: false, next: 0 };
+    gridEl.classList.remove('is-scanning');
     for (var i = 0; i < N * N; i++) {
       vals[i] = given(i);
       cells[i].classList.remove('is-done', 'is-error', 'is-sel', 'is-region', 'is-shake');
+      SOLVE_CLASSES.forEach(function (k) { cells[i].classList.remove(k); });
       paint(i);
     }
     msg('');
@@ -181,14 +256,11 @@
     var bad = {};
     for (var i = 0; i < N * N; i++) {
       if (!vals[i]) continue;
-      neighbors(i).concat(members[regionOf(i)]).forEach(function (j) {
-        if (j !== i && vals[j] === vals[i]) { bad[i] = true; bad[j] = true; }
-      });
+      PEERS[i].forEach(function (j) { if (vals[j] === vals[i]) { bad[i] = true; bad[j] = true; } });
     }
     S.errors = Object.keys(bad).length;
     cells.forEach(function (el, k) { el.classList.toggle('is-error', !!bad[k]); });
-    var filled = vals.filter(Boolean).length;
-    if (filled === N * N && !S.errors) win();
+    if (vals.filter(Boolean).length === N * N && !S.errors) win();
     render();
   }
 
@@ -202,46 +274,104 @@
     msg('sg.win', { t: fmtTime(S.elapsed) });
   }
 
-  // ---- Résolution automatique (backtracking animé)
-  function step() {
-    var ev = TRACE[S.step++], i = ev[1];
-    if (S.lastTry !== -1 && S.lastTry !== i && cells[S.lastTry].classList.contains('is-try')) {
-      vals[S.lastTry] = 0; paint(S.lastTry);
+  // ---- Animation de la résolution
+  function pencil(i, list) {
+    var html = '<span class="pm" aria-hidden="true">';
+    for (var v = 1; v <= size[regionOf(i)]; v++) {
+      html += '<i data-v="' + v + '"' + (list.indexOf(v) < 0 ? ' class="is-off"' : '') + '>' + v + '</i>';
     }
-    if (ev[0] === 'try') { S.tries++; vals[i] = ev[2]; paint(i, 'is-try'); S.lastTry = i; }
-    else if (ev[0] === 'set') { vals[i] = ev[2]; paint(i, 'is-set'); S.lastTry = -1; }
-    else { S.backs++; vals[i] = 0; paint(i, 'is-undo'); S.lastTry = -1; }
+    cells[i].innerHTML = html + '</span>';
   }
-  function frame(now) {
+  function big(i, v) { cells[i].innerHTML = '<span class="big">' + v + '</span>'; }
+  function clearMarks() {
+    cells.forEach(function (el) {
+      el.classList.remove('is-focus', 'is-scan');
+      var solo = el.querySelector('.is-solo');
+      if (solo) solo.classList.remove('is-solo');
+    });
+  }
+  // Applique une étape et renvoie sa durée (ms, avant accélération).
+  function show(ev) {
+    clearMarks();
+    switch (ev.t) {
+      case 'cands':
+        for (var i = 0; i < N * N; i++) if (!vals[i]) pencil(i, ev.cand[i]);
+        flash(gridEl, 'is-scanning');
+        return 1400;
+      case 'focus':
+        gridEl.classList.remove('is-scanning');
+        cells[ev.i].classList.add('is-focus');
+        if (ev.kind === 'region') members[ev.r].forEach(function (j) { cells[j].classList.add('is-scan'); });
+        var mark = cells[ev.i].querySelector('i[data-v="' + ev.v + '"]');
+        if (mark) mark.classList.add('is-solo');
+        return ev.kind === 'guess' ? 900 : ev.kind === 'region' ? 520 : 440;
+      case 'place':
+        vals[ev.i] = ev.v;
+        big(ev.i, ev.v);
+        cells[ev.i].classList.toggle('is-guess', ev.kind === 'guess');
+        flash(cells[ev.i], 'is-placed');
+        label(ev.i);
+        if (ev.kind !== 'guess') S.ded++;
+        return 260;
+      case 'elim':
+        ev.cells.forEach(function (j) {
+          var d = cells[j].querySelector('i[data-v="' + ev.v + '"]');
+          if (d) d.classList.add('is-out');
+          cells[j].style.setProperty('--hd', (dist(ev.i, j) - 1) * 70 + 'ms');
+          flash(cells[j], 'is-hit');
+        });
+        S.elims += ev.cells.length;
+        return ev.cells.length ? 380 : 120;
+      case 'contra':
+        flash(cells[ev.i], 'is-contra');
+        return 800;
+      case 'undo':
+        for (var k = 0; k < N * N; k++) {
+          if (given(k)) continue;
+          vals[k] = ev.g[k];
+          if (ev.g[k]) big(k, ev.g[k]); else pencil(k, ev.cand[k]);
+          cells[k].classList.remove('is-guess');
+          label(k);
+        }
+        return 700;
+    }
+    return 0;
+  }
+
+  function tick() {
     if (!S.playing) return;
-    S.acc += Math.min(now - (S.last || now), 64) * EVENTS_PER_SECOND / 1000;
-    S.last = now;
-    while (S.acc >= 1 && S.step < TRACE.length) { step(); S.acc--; }
-    if (S.step >= TRACE.length) return finishSolve();
+    if (S.step >= SOLUTION.events.length) return finishSolve();
+    var d = show(SOLUTION.events[S.step++]);
     render();
-    S.raf = requestAnimationFrame(frame);
+    // Les trois premières déductions vont lentement, ensuite le rythme accélère.
+    S.next = setTimeout(tick, S.ded < 3 ? d : d / 1.9);
   }
+
   function finishSolve() {
     S.playing = false;
     S.mode = 'solved';
-    cells.forEach(function (el) { el.classList.remove('is-try'); });
+    clearMarks();
+    gridEl.classList.remove('is-scanning');
+    cells.forEach(function (el) { el.classList.remove('is-guess'); });
     celebrate();
-    msg('sg.solvedMsg', { a: S.tries, b: S.backs });
     render();
   }
+
   function onSolve() {
     if (S.mode === 'solve') {
       S.playing = !S.playing;
-      if (S.playing) { S.last = 0; S.raf = requestAnimationFrame(frame); } else cancelAnimationFrame(S.raf);
+      if (S.playing) tick(); else clearTimeout(S.next);
       return render();
     }
     reset();
     S.mode = 'solve';
     select(-1);
-    if (reduced) { while (S.step < TRACE.length) step(); return finishSolve(); }
-    S.playing = true; S.last = 0;
-    S.raf = requestAnimationFrame(frame);
-    render();
+    if (reduced) {
+      while (S.step < SOLUTION.events.length) show(SOLUTION.events[S.step++]);
+      return finishSolve();
+    }
+    S.playing = true;
+    tick();
   }
 
   // ---- Affichage des compteurs et des boutons
@@ -249,7 +379,7 @@
   function render() {
     var filled = vals.filter(Boolean).length + '/' + N * N;
     if (S.mode === 'solve' || S.mode === 'solved') {
-      stat(0, 'sg.tries', S.tries); stat(1, 'sg.backs', S.backs); stat(2, 'sg.filled', filled);
+      stat(0, 'sg.deduce', S.ded); stat(1, 'sg.elim', S.elims); stat(2, 'sg.filled', filled);
     } else {
       stat(0, 'sg.filled', filled); stat(1, 'sg.time', fmtTime(S.elapsed)); stat(2, 'sg.conflicts', S.errors);
     }

@@ -97,6 +97,9 @@
     'mp.title': 'My mobility projects',
     'mp.sub': 'Three Master’s options abroad, in line with the tracks I am considering at ENSEEIHT: HPC &amp; Big Data first, or System Architecture &amp; Networks.',
     'mp.spec': 'Specializations I am interested in', 'mp.prog': 'Programmes I am interested in',
+    'mp.1.alt': 'The Rolex Learning Center on the EPFL campus in Lausanne',
+    'mp.2.alt': 'Façade of the Royal School of Mines, Imperial College London',
+    'mp.3.alt': 'Tech Tower on the Georgia Tech campus in Atlanta',
     'mp.1.l': 'Switzerland · Lausanne',
     'mp.1.p': 'An MSc in Computer Science, through a “free mover” exchange with ENSEEIHT.',
     'mp.1.s1': 'Operating systems, architecture, distributed and networked systems, data management.',
@@ -176,7 +179,7 @@
     'contact.copy': 'Copy address', 'contact.write': 'Write to me', 'contact.linkedin': 'Follow me on LinkedIn',
     'foot.tag': 'Computer Science Engineering Student · ENSEEIHT, Toulouse INP',
     'foot.pitch': 'Video pitch',
-    'foot.version': 'Version 1.4 · S5 “Launch” · November 2026',
+    'foot.version': 'Version 1.5 · S5 “Launch” · November 2026',
     'foot.static': 'Static site, no cookies'
   };
 
@@ -186,16 +189,18 @@
       'copy.ok': 'Adresse copiée', 'lang.aria': 'Switch to English', 'pitch.none': 'La vidéo arrive bientôt.',
       'theme.dark': 'Passer en mode sombre', 'theme.light': 'Passer en mode clair',
       'sg.solve': 'Voir la résolution automatique', 'sg.pause': 'Pause', 'sg.resume': 'Reprendre', 'sg.replay': 'Rejouer la résolution',
-      'sg.filled': 'Cases remplies', 'sg.time': 'Temps', 'sg.conflicts': 'Conflits', 'sg.tries': 'Essais', 'sg.backs': 'Retours arrière',
-      'sg.win': 'Bravo, grille résolue en %t !', 'sg.solvedMsg': 'Résolu par backtracking : %a essais, %b retours arrière.',
+      'sg.filled': 'Cases remplies', 'sg.time': 'Temps', 'sg.conflicts': 'Conflits',
+      'sg.deduce': 'Déductions', 'sg.elim': 'Candidats éliminés',
+      'sg.win': 'Bravo, grille résolue en %t !',
       'sg.cell': 'Ligne %r, colonne %c, région de %n cases : %v', 'sg.empty': 'vide', 'sg.given': ' (chiffre donné)'
     },
     en: {
       'copy.ok': 'Address copied', 'lang.aria': 'Passer en français', 'pitch.none': 'The video is coming soon.',
       'theme.dark': 'Switch to dark mode', 'theme.light': 'Switch to light mode',
       'sg.solve': 'Watch the automatic solver', 'sg.pause': 'Pause', 'sg.resume': 'Resume', 'sg.replay': 'Replay the solver',
-      'sg.filled': 'Cells filled', 'sg.time': 'Time', 'sg.conflicts': 'Conflicts', 'sg.tries': 'Attempts', 'sg.backs': 'Backtracks',
-      'sg.win': 'Well done, grid solved in %t!', 'sg.solvedMsg': 'Solved by backtracking: %a attempts, %b backtracks.',
+      'sg.filled': 'Cells filled', 'sg.time': 'Time', 'sg.conflicts': 'Conflicts',
+      'sg.deduce': 'Deductions', 'sg.elim': 'Candidates removed',
+      'sg.win': 'Well done, grid solved in %t!',
       'sg.cell': 'Row %r, column %c, region of %n cells: %v', 'sg.empty': 'empty', 'sg.given': ' (given)'
     }
   };
